@@ -1,21 +1,49 @@
 import { useState } from 'react';
 import {
-  Container, Paper, Typography, TextField, Button, Stack
+  Container,
+  Paper,
+  Typography,
+  TextField,
+  Button,
+  Stack,
+  Alert,
 } from '@mui/material';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { loginUser } from '../utils/auth';
+import { sendPhoneOtp, verifyPhoneOtp } from '../utils/auth';
 
 export default function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [otp, setOtp] = useState('');
+  const [otpSent, setOtpSent] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const handleLogin = () => {
-    if (loginUser(email, password)) {
+  const handleSendOtp = async () => {
+    try {
+      setLoading(true);
+      setError('');
+      await sendPhoneOtp(phoneNumber);
+      setOtpSent(true);
+      alert('OTP sent to your mobile number.');
+    } catch (err) {
+      setError(err.message || 'Unable to send OTP.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleLogin = async () => {
+    try {
+      setLoading(true);
+      setError('');
+      await verifyPhoneOtp(otp);
       navigate('/dashboard');
-    } else {
-      alert('Invalid credentials');
+    } catch (err) {
+      setError(err.message || 'Invalid OTP. Please try again.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -32,18 +60,39 @@ export default function Login() {
         </Typography>
 
         <Stack spacing={3}>
-          <TextField label="Email" fullWidth onChange={(e) => setEmail(e.target.value)} />
-          <TextField label="Password" type="password" fullWidth
-            onChange={(e) => setPassword(e.target.value)}
+          <TextField
+            label="Mobile Number"
+            fullWidth
+            value={phoneNumber}
+            onChange={(e) => setPhoneNumber(e.target.value)}
+            placeholder="+91 98765 43210"
           />
 
-          <Button variant="contained" size="large" onClick={handleLogin}>
-            Login
+          <Button variant="outlined" onClick={handleSendOtp} disabled={loading || !phoneNumber}>
+            {loading ? 'Sending...' : 'Send OTP'}
+          </Button>
+
+          {otpSent && (
+            <TextField
+              label="OTP"
+              fullWidth
+              value={otp}
+              onChange={(e) => setOtp(e.target.value)}
+              placeholder="123456"
+            />
+          )}
+
+          {error && <Alert severity="error">{error}</Alert>}
+
+          <Button variant="contained" size="large" onClick={handleLogin} disabled={loading || !otpSent || !otp}>
+            Verify & Login
           </Button>
 
           <Button onClick={() => navigate('/register')}>
             Create new account
           </Button>
+
+          <div id="recaptcha-container" />
         </Stack>
       </Paper>
     </Container>

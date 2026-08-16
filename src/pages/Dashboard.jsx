@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
@@ -20,10 +20,14 @@ import {
   Restaurant,
   Whatshot,
   Logout,
+  Login,
   TrendingUp,
+  ChevronLeft,
+  ChevronRight,
 } from "@mui/icons-material";
 
-import DietitianProfile from "../assets/Dietatian_Profile.jpeg";
+import { getCurrentUser, logout } from "../utils/auth";
+import DietitianProfile from "../assets/dietatian_profile_closeup.jpeg";
 
 
 const Dashboard = () => {
@@ -33,8 +37,41 @@ const Dashboard = () => {
   // USER DATA
   // =========================================================
 
+  const currentUser = getCurrentUser();
+  const isLoggedIn = Boolean(currentUser);
+
   const userName =
-    localStorage.getItem("userName") || "Wahid";
+    currentUser?.name || localStorage.getItem("userName") || "Wahid";
+
+  const [profileIndex, setProfileIndex] = useState(0);
+  const [touchStartX, setTouchStartX] = useState(0);
+
+  const profiles = [
+    {
+      name: "Shalini Goswami",
+      role: "Dietitian & Nutritionist",
+      bio: "Shalini Goswami is a wellness-focused dietitian helping people build healthier, more balanced routines through personalized nutrition guidance, sustainable eating habits, and science-backed lifestyle support.",
+      image: DietitianProfile,
+      href: "https://shalinigoswami.netlify.app/",
+    },
+    {
+      name: userName,
+      role: "Product & Technical Lead",
+      bio: "I design and build the experiences behind this product to make healthy eating feel simple, motivating, and easy to trust.",
+      image: null,
+      href: null,
+    },
+  ];
+
+  const goToNextProfile = () => {
+    setProfileIndex((prev) => (prev + 1) % profiles.length);
+  };
+
+  const goToPreviousProfile = () => {
+    setProfileIndex((prev) => (prev - 1 + profiles.length) % profiles.length);
+  };
+
+  const currentProfile = profiles[profileIndex];
 
   const points =
     Number(localStorage.getItem("points")) || 80;
@@ -48,7 +85,7 @@ const Dashboard = () => {
   // =========================================================
 
   const salad = {
-    name: "Grilled Chicken Salad",
+    name: "Paneer Salad",
 
     price: 199,
 
@@ -65,10 +102,10 @@ const Dashboard = () => {
     fiber: "6g",
 
     description:
-      "Fresh vegetables, grilled chicken and a light dressing — a balanced meal made for your everyday nutrition goals.",
+      "Fresh vegetables, grilled paneer and a light dressing — a balanced vegetarian meal made for your everyday nutrition goals.",
 
     micronutrients:
-      "Rich in lean protein, vitamin A, vitamin C, iron and potassium.",
+      "Rich in protein, vitamin A, vitamin C, iron and potassium.",
   };
 
 
@@ -96,9 +133,9 @@ const Dashboard = () => {
   // LOGOUT
   // =========================================================
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    await logout();
     localStorage.removeItem("loggedIn");
-
     navigate("/login");
   };
 
@@ -108,6 +145,10 @@ const Dashboard = () => {
   // =========================================================
 
   const handlePurchase = () => {
+    if (!isLoggedIn) {
+      navigate("/login");
+      return;
+    }
 
     const newPoints = points + 10;
 
@@ -233,45 +274,74 @@ const Dashboard = () => {
           sx={{
             display: "flex",
             alignItems: "center",
-            gap: 8,
+            gap: 2,
           }}
         >
+          {isLoggedIn ? (
+            <>
+              <Box>
+                <Typography
+                  sx={{
+                    fontSize: "12px",
+                    color: "#6a7280",
+                    textAlign: "right",
+                  }}
+                >
+                  Welcome back
+                </Typography>
 
-          <Box>
+                <Typography
+                  sx={{
+                    fontSize: "16px",
+                    fontWeight: 700,
+                    color: "#12284a",
+                    textAlign: "right",
+                  }}
+                >
+                  {userName} 👋
+                </Typography>
+              </Box>
 
-            <Typography
-              sx={{
-                fontSize: "12px",
-                color: "#6a7280",
-                textAlign: "right",
-              }}
-            >
-              Welcome back
-            </Typography>
+              <Button
+                startIcon={<Logout />}
+                onClick={handleLogout}
+                className="logout-btn"
+              >
+                Logout
+              </Button>
+            </>
+          ) : (
+            <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+              <Button
+                startIcon={<Login />}
+                onClick={() => navigate('/login')}
+                className="logout-btn"
+              >
+                Sign In
+              </Button>
 
-
-            <Typography
-              sx={{
-                fontSize: "16px",
-                fontWeight: 700,
-                color: "#12284a",
-                textAlign: "right",
-              }}
-            >
-              {userName} 👋
-            </Typography>
-
-          </Box>
-
-
-          <Button
-            startIcon={<Logout />}
-            onClick={handleLogout}
-            className="logout-btn"
-          >
-            Logout
-          </Button>
-
+              <Button
+                variant="contained"
+                onClick={() => navigate('/register')}
+                sx={{
+                  background: "#12284a",
+                  color: "#fff",
+                  borderRadius: "30px",
+                  textTransform: "none",
+                  fontWeight: 700,
+                  padding: "9px 18px",
+                  boxShadow: "4px 4px 0 #e58d9c",
+                  '&:hover': {
+                    background: "#e58d9c",
+                    color: "#12284a",
+                    boxShadow: "2px 2px 0 #12284a",
+                  },
+                }}
+              >
+                Register
+              </Button>
+            </Box>
+          )}
         </Box>
 
       </motion.div>
@@ -280,6 +350,7 @@ const Dashboard = () => {
             OPENING SALE BANNER
         ===================================================== */}
 
+        {/*
         <motion.div
         initial={{
             opacity: 0,
@@ -322,6 +393,7 @@ const Dashboard = () => {
 
         </Box>
         </motion.div>
+        */}
 
 
       {/* =====================================================
@@ -360,7 +432,7 @@ const Dashboard = () => {
               {/* BADGE */}
 
               <Chip
-                label="SCIENCE-BACKED • HIGH PROTEIN"
+                label="NOW INTRODUCING • VEGETARIAN SALAD"
                 size="small"
               />
 
@@ -369,7 +441,7 @@ const Dashboard = () => {
 
               <Typography className="salad-title">
 
-                CHICKEN
+                PANEER
                 <br />
 
                 SALAD
@@ -897,115 +969,6 @@ const Dashboard = () => {
       </Box>
 
 
-
-      {/* =====================================================
-          YOUR PROGRESS
-      ===================================================== */}
-
-      <motion.div
-
-        initial={{
-          opacity: 0,
-          y: 25,
-        }}
-
-        whileInView={{
-          opacity: 1,
-          y: 0,
-        }}
-
-        viewport={{
-          once: true,
-        }}
-
-      >
-
-        <Typography className="section-title">
-
-          Your Profile
-
-        </Typography>
-
-
-        <Box className="stats-grid">
-
-
-          {/* SALADS */}
-
-          <Card className="stat-card">
-
-            <Restaurant className="stat-icon" />
-
-
-            <Typography className="stat-number">
-
-              {saladsPurchased}
-
-            </Typography>
-
-
-            <Typography className="stat-label">
-
-              Salads Purchased
-
-            </Typography>
-
-          </Card>
-
-
-
-          {/* POINTS */}
-
-          <Card className="stat-card">
-
-            <Star className="stat-icon" />
-
-
-            <Typography className="stat-number">
-
-              {points}
-
-            </Typography>
-
-
-            <Typography className="stat-label">
-
-              Reward Points
-
-            </Typography>
-
-          </Card>
-
-
-
-          {/* NEXT PRICE */}
-
-          <Card className="stat-card">
-
-            <TrendingUp className="stat-icon" />
-
-
-            <Typography className="stat-number">
-
-              ₹{discountedPrice}
-
-            </Typography>
-
-
-            <Typography className="stat-label">
-
-              Next Salad Price
-
-            </Typography>
-
-          </Card>
-
-        </Box>
-
-      </motion.div>
-
-
-
       {/* =====================================================
           NUTRITION INFORMATION
       ===================================================== */}
@@ -1200,6 +1163,261 @@ const Dashboard = () => {
 
           </CardContent>
 
+        </Card>
+
+      </motion.div>
+
+
+
+      {/* =====================================================
+          PEOPLE BEHIND THIS
+      ===================================================== */}
+
+      <motion.div
+
+        initial={{
+          opacity: 0,
+          y: 25,
+        }}
+
+        whileInView={{
+          opacity: 1,
+          y: 0,
+        }}
+
+        viewport={{
+          once: true,
+        }}
+
+      >
+
+        <Typography className="section-title">
+
+          People behind this
+
+        </Typography>
+
+
+        <Card
+          sx={{
+            maxWidth: "1280px",
+            margin: "0 auto",
+            borderRadius: "28px",
+            background: "#fffaf3",
+            border: "1.5px solid #12284a",
+            boxShadow: "7px 7px 0 #e7b5bc",
+          }}
+        >
+          <CardContent
+            sx={{
+              padding: "22px",
+              '@media (max-width: 700px)': {
+                padding: "16px",
+              },
+            }}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "flex-end",
+                gap: 1,
+                marginBottom: 2,
+                '@media (max-width: 700px)': {
+                  marginBottom: 1.5,
+                },
+              }}
+            >
+              <Button
+                variant="outlined"
+                onClick={goToPreviousProfile}
+                sx={{
+                  minWidth: "40px",
+                  width: "40px",
+                  height: "40px",
+                  borderColor: "#12284a",
+                  color: "#12284a",
+                  borderRadius: "50%",
+                  padding: 0,
+                  '@media (max-width: 700px)': {
+                    minWidth: "34px",
+                    width: "34px",
+                    height: "34px",
+                  },
+                }}
+              >
+                <ChevronLeft />
+              </Button>
+
+              <Button
+                variant="outlined"
+                onClick={goToNextProfile}
+                sx={{
+                  minWidth: "40px",
+                  width: "40px",
+                  height: "40px",
+                  borderColor: "#12284a",
+                  color: "#12284a",
+                  borderRadius: "50%",
+                  padding: 0,
+                  '@media (max-width: 700px)': {
+                    minWidth: "34px",
+                    width: "34px",
+                    height: "34px",
+                  },
+                }}
+              >
+                <ChevronRight />
+              </Button>
+            </Box>
+
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: 3,
+                minHeight: 260,
+                '@media (max-width: 700px)': {
+                  flexDirection: "column",
+                  alignItems: "flex-start",
+                  gap: 2,
+                  minHeight: 0,
+                },
+              }}
+              onTouchStart={(event) => setTouchStartX(event.touches[0].clientX)}
+              onTouchEnd={(event) => {
+                const delta = event.changedTouches[0].clientX - touchStartX;
+
+                if (delta > 40) {
+                  goToPreviousProfile();
+                } else if (delta < -40) {
+                  goToNextProfile();
+                }
+              }}
+            >
+              {currentProfile.image ? (
+                <Box
+                  component={currentProfile.href ? "a" : "div"}
+                  href={currentProfile.href || undefined}
+                  target={currentProfile.href ? "_blank" : undefined}
+                  rel={currentProfile.href ? "noopener noreferrer" : undefined}
+                  sx={{
+                    display: "block",
+                    flexShrink: 0,
+                    textDecoration: "none",
+                    '@media (max-width: 700px)': {
+                      width: "100%",
+                    },
+                  }}
+                >
+                  <img
+                    src={currentProfile.image}
+                    alt={currentProfile.name}
+                    style={{
+                      width: 220,
+                      height: 220,
+                      objectFit: "cover",
+                      borderRadius: "22px",
+                      border: "2px solid #12284a",
+                      display: "block",
+                    }}
+                  />
+                </Box>
+              ) : (
+                <Box
+                  sx={{
+                    width: 220,
+                    height: 220,
+                    borderRadius: "22px",
+                    border: "2px solid #12284a",
+                    background: "linear-gradient(135deg, #e58d9c 0%, #dce9f3 100%)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontFamily: "Manrope",
+                    fontWeight: 800,
+                    fontSize: "68px",
+                    color: "#12284a",
+                    flexShrink: 0,
+                    '@media (max-width: 700px)': {
+                      width: 150,
+                      height: 150,
+                      fontSize: "46px",
+                    },
+                  }}
+                >
+                  {userName.slice(0, 2).toUpperCase()}
+                </Box>
+              )}
+
+              <Box sx={{ flex: 1, '@media (max-width: 700px)': { width: '100%' } }}>
+                <Typography
+                  sx={{
+                    fontFamily: "Manrope",
+                    fontSize: "28px",
+                    fontWeight: 800,
+                    color: "#12284a",
+                    marginBottom: "4px",
+                    '@media (max-width: 700px)': {
+                      fontSize: "22px",
+                    },
+                  }}
+                >
+                  {currentProfile.name}
+                </Typography>
+
+                <Typography
+                  sx={{
+                    fontSize: "15px",
+                    fontWeight: 700,
+                    color: "#e58d9c",
+                    letterSpacing: "0.8px",
+                    textTransform: "uppercase",
+                    marginBottom: "12px",
+                    '@media (max-width: 700px)': {
+                      fontSize: "12px",
+                    },
+                  }}
+                >
+                  {currentProfile.role}
+                </Typography>
+
+                <Typography
+                  sx={{
+                    color: "#4e5969",
+                    fontSize: "15px",
+                    lineHeight: 1.7,
+                    marginBottom: "12px",
+                    '@media (max-width: 700px)': {
+                      fontSize: "14px",
+                      lineHeight: 1.6,
+                    },
+                  }}
+                >
+                  {currentProfile.bio}
+                </Typography>
+
+                {currentProfile.href ? (
+                  <Typography
+                    component="a"
+                    href={currentProfile.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    sx={{
+                      display: "inline-block",
+                      fontWeight: 700,
+                      color: "#12284a",
+                      textDecoration: "underline",
+                      '@media (max-width: 700px)': {
+                        fontSize: "14px",
+                      },
+                    }}
+                  >
+                    View profile
+                  </Typography>
+                ) : null}
+              </Box>
+            </Box>
+          </CardContent>
         </Card>
 
       </motion.div>
@@ -1590,43 +1808,7 @@ const Dashboard = () => {
           </Box>
 
 
-          <Box
-            sx={{
-              maxWidth: 400,
-              textAlign: "right",
-            }}
-          >
 
-            <Box sx={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: 2 }}>
-              <Box sx={{ textAlign: "right" }}>
-                <Typography sx={{ fontSize: "13px", color: "#667181", marginBottom: 0.5 }}>
-                  Meet our dietitian
-                </Typography>
-
-                <Box component="a" href="https://shalinigoswami.netlify.app/" target="_blank" rel="noopener noreferrer" sx={{ display: "inline-block", textDecoration: "none" }}>
-                  <img
-                    src={DietitianProfile}
-                    alt="Shallini Goswami"
-                    style={{
-                      width: 64,
-                      height: 64,
-                      borderRadius: "50%",
-                      objectFit: "cover",
-                      border: "2px solid #12284a",
-                      display: "block",
-                    }}
-                  />
-                </Box>
-
-                <Box>
-                  <Typography component="a" href="https://shalinigoswami.netlify.app/" target="_blank" rel="noopener noreferrer" sx={{ display: "block", marginTop: 0.5, fontSize: "13px", color: "#12284a", textDecoration: "underline", fontWeight: 600 }}>
-                    Shallini Goswami | Nutritionist
-                  </Typography>
-                </Box>
-              </Box>
-            </Box>
-
-          </Box>
 
         </Box>
 
