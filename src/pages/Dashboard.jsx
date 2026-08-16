@@ -444,12 +444,11 @@ const Dashboard = () => {
                 PANEER
                 <br />
 
-                SALAD
+                QUINOA
                 <br />
 
-                WITH A
-                <br />
-                TWIST
+                BOWL!
+                
 
               </Typography>
 
