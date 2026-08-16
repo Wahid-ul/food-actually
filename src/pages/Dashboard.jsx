@@ -56,8 +56,8 @@ const Dashboard = () => {
     },
     {
       name: userName,
-      role: "Product & Technical Lead",
-      bio: "I design and build the experiences behind this product to make healthy eating feel simple, motivating, and easy to trust.",
+      role: "Product & Technical Support",
+      bio: "Contributes to Food, Actually by building the website and developing software tools that power this platform. Focused on creating seamless, user-friendly experiences that make healthy eating accessible and enjoyable for everyone.",
       image: null,
       href: null,
     },
