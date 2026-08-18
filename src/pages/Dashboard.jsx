@@ -87,17 +87,17 @@ const Dashboard = () => {
   const salad = {
     name: "Paneer Salad",
 
-    price: 199,
+    price: 269,
 
-    originalPrice: 249,
+    originalPrice: 269,
 
-    calories: 320,
+    calories: 410,
 
-    protein: "32g",
+    protein: "30g",
 
-    carbs: "18g",
+    carbs: "55g",
 
-    fat: "12g",
+    fat: "8g",
 
     fiber: "6g",
 
@@ -441,13 +441,13 @@ const Dashboard = () => {
 
               <Typography className="salad-title">
 
-                PANEER
+                MILLET
                 <br />
 
-                QUINOA
+                PROTEIN
                 <br />
 
-                BOWL!
+                BOWL(Veg)
                 
 
               </Typography>
@@ -1025,7 +1025,7 @@ const Dashboard = () => {
 
                 <Typography className="macro-value">
 
-                  320
+                  410
 
                 </Typography>
 
@@ -1042,7 +1042,7 @@ const Dashboard = () => {
 
                 <Typography className="macro-value">
 
-                  32g
+                  30g
 
                 </Typography>
 
@@ -1059,7 +1059,7 @@ const Dashboard = () => {
 
                 <Typography className="macro-value">
 
-                  18g
+                  55g
 
                 </Typography>
 
@@ -1076,7 +1076,7 @@ const Dashboard = () => {
 
                 <Typography className="macro-value">
 
-                  12g
+                  8g
 
                 </Typography>
 
@@ -1093,7 +1093,7 @@ const Dashboard = () => {
 
                 <Typography className="macro-value">
 
-                  6g
+                  8g
 
                 </Typography>
 
@@ -1520,7 +1520,7 @@ const Dashboard = () => {
                   }}
                 >
 
-                  ₹199
+                  269
 
                 </Typography>
 
@@ -1690,7 +1690,7 @@ const Dashboard = () => {
                   }}
                 >
 
-                  ₹199
+                  ₹269
 
                 </Typography>
 
