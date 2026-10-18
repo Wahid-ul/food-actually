@@ -1115,7 +1115,7 @@ const Dashboard = () => {
                 }}
 
                 style={{
-                  flex: "0 0 390px",
+                  flex: "0 0 300px",
                   scrollSnapAlign:
                     "start",
                 }}
@@ -1174,268 +1174,42 @@ const Dashboard = () => {
                     }}
                   />
 
-                  <CardContent>
+                  <CardContent className="salad-card-inner">
 
-                    {/* BADGE */}
-
-                    <Chip
-                      label={item.badge}
-                      size="small"
-                    />
-
-
-                    {/* TITLE */}
-
-                    <Typography className="salad-title">
-
-                      {item.name}
-
-                    </Typography>
-
-
-                    {/* DESCRIPTION */}
-
-                    <Typography className="salad-description">
-
-                      {item.description}
-
-                    </Typography>
-
-
-                    {/* =================================================
-                        NUTRITION
-                    ================================================== */}
-
-                    <Box className="nutrition-grid">
-
-                      {/* PROTEIN */}
-
-                      <Box className="nutrition-item protein">
-
-                        <Typography className="nutrition-value">
-
-                          {item.protein}
-
-                        </Typography>
-
-                        <Typography className="nutrition-label">
-
-                          Protein
-
-                        </Typography>
-
+                    {/* ── TOP: badge + name + macros ── */}
+                    <Box className="salad-zone salad-zone-top">
+                      <Chip label={item.badge} size="small" />
+                      <Typography className="salad-title">{item.name}</Typography>
+                      <Box className="salad-macro-row">
+                        <Box className="salad-macro-pill">
+                          <Typography className="salad-macro-value">{item.protein}</Typography>
+                          <Typography className="salad-macro-label">protein</Typography>
+                        </Box>
+                        <Box className="salad-macro-pill">
+                          <Whatshot sx={{ fontSize: 13, color: "#e58d9c" }} />
+                          <Typography className="salad-macro-value">{item.calories}</Typography>
+                          <Typography className="salad-macro-label">kcal</Typography>
+                        </Box>
                       </Box>
-
-
-                      {/* CARBS */}
-
-                      <Box className="nutrition-item carbs">
-
-                        <Typography className="nutrition-value">
-
-                          {item.carbs}
-
-                        </Typography>
-
-                        <Typography className="nutrition-label">
-
-                          Carbs
-
-                        </Typography>
-
-                      </Box>
-
-
-                      {/* FAT */}
-
-                      <Box className="nutrition-item fat">
-
-                        <Typography className="nutrition-value">
-
-                          {item.fat}
-
-                        </Typography>
-
-                        <Typography className="nutrition-label">
-
-                          Fat
-
-                        </Typography>
-
-                      </Box>
-
-
-                      {/* FIBER */}
-
-                      <Box className="nutrition-item fiber">
-
-                        <Typography className="nutrition-value">
-
-                          {item.fiber}
-
-                        </Typography>
-
-                        <Typography className="nutrition-label">
-
-                          Fiber
-
-                        </Typography>
-
-                      </Box>
-
                     </Box>
 
-
-                    {/* DIVIDER */}
-
-                    <Divider
-                      sx={{
-                        marginTop: "10px",
-                        marginBottom: "8px",
-                        borderColor:
-                          "rgba(255,255,255,0.45)",
-                      }}
-                    />
-
-
-                    {/* CALORIES */}
-
-                    <Box
-                      sx={{
-                        display: "flex",
-                        alignItems:
-                          "center",
-                        marginBottom: 0,
-                      }}
-                    >
-
-                      <Whatshot
-                        sx={{
-                          color:
-                            "#e58d9c",
-                          fontSize: 16,
-                          marginRight: 6,
-                        }}
-                      />
-
-                      <Typography className="calories">
-
-                        {item.calories} kcal
-
-                      </Typography>
-
-                    </Box>
-
-
-                    {/* MICRO NUTRIENTS */}
-
-                    <Typography className="micronutrients">
-
-                      {item.micronutrients}
-
-                    </Typography>
-
-
-                    {/* =================================================
-                        PRICE
-                    ================================================== */}
-
-                    <Box className="purchase-section">
-
-                      <Typography className="price-label">
-
-                        Fresh meal price
-
-                      </Typography>
-
-
-                      <Box
-                        sx={{
-                          display: "flex",
-                          alignItems:
-                            "center",
-                          gap: 2,
-                        }}
-                      >
-
-                        <Typography className="price">
-
-                          ₹{item.price}
-
-                        </Typography>
-
-
-                        {item.originalPrice >
-                          item.price && (
-
-                          <Typography
-                            sx={{
-                              color:
-                                "rgba(255,255,255,0.75)",
-
-                              textDecoration:
-                                "line-through",
-
-                              fontSize:
-                                "15px",
-                            }}
-                          >
-
-                            ₹
-                            {
-                              item.originalPrice
-                            }
-
-                          </Typography>
-
-                        )}
-
-                      </Box>
-
-
-                      {/* BUY BUTTON */}
-
-                      <motion.div
-
-                        whileHover={{
-                          scale: 1.03,
-                        }}
-
-                        whileTap={{
-                          scale: 0.97,
-                        }}
-                      >
-
+                    {/* ── BOTTOM: price + button ── */}
+                    <Box className="salad-zone salad-zone-bottom">
+                      <Typography className="price">₹{item.price}</Typography>
+                      <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} style={{ width: "100%" }}>
                         <Button
                           variant="contained"
-
-                          startIcon={
-                            <ShoppingCart />
-                          }
-
-                          onClick={(
-                            event
-                          ) => {
-
+                          startIcon={<ShoppingCart />}
+                          onClick={(event) => {
                             event.stopPropagation();
-
-                            setSelectedSalad(
-                              item
-                            );
-
+                            setSelectedSalad(item);
                             handlePurchase();
-
                           }}
-
                           className="buy-button"
                         >
-
                           Choose this meal
-
                         </Button>
-
                       </motion.div>
-
                     </Box>
 
                   </CardContent>
@@ -1488,20 +1262,9 @@ const Dashboard = () => {
                 <Typography className="plan-title">{plan.title}</Typography>
                 <Typography className="plan-copy">{plan.description}</Typography>
 
-                <Box className="subscription-price-list">
-                  {[
-                    { label: "Lunch", mealsPerDay: 1 },
-                    { label: "Dinner", mealsPerDay: 1 },
-                    { label: "Lunch + dinner", mealsPerDay: 2 },
-                  ].map((option) => (
-                    <Box className="subscription-price-row" key={option.label}>
-                      <Typography className="subscription-meal-label">{option.label}</Typography>
-                      <Typography className="subscription-meal-price">
-                        {estimatePlanPrice(plan.days, option.mealsPerDay)}
-                      </Typography>
-                    </Box>
-                  ))}
-                </Box>
+                <Typography className="plan-from-price">
+                  from {formatPrice(mealPriceMinimum * plan.days)}
+                </Typography>
 
                 <Button className="plan-button" onClick={() => document.querySelector(".menu-scroll")?.scrollIntoView({ behavior: "smooth" })}>
                   Explore meals
@@ -1511,7 +1274,7 @@ const Dashboard = () => {
           ))}
         </Box>
         <Typography className="subscription-pricing-note">
-          Estimates assume 7, 30, or 90 days of meals respectively. Delivery charges, if applicable, are not included.
+          Price shown is the minimum estimate for one meal per day. Delivery charges, if applicable, are not included.
         </Typography>
       </Box>
 
@@ -1521,107 +1284,45 @@ const Dashboard = () => {
       ===================================================== */}
 
       <Box className="diet-plans" id="diet-plans">
-        <Box className="diet-plans-heading">
+        <motion.div
+          className="diet-plans-heading"
+          initial={{ opacity: 0, y: 22 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.4 }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        >
           <Typography className="section-kicker">PERSONALIZED NUTRITION</Typography>
           <Typography className="diet-plans-title">Start with a goal. Shape a plan around you.</Typography>
           <Typography className="diet-plans-description">
             Explore a starting point, then speak with our nutritionist about what fits your needs. These examples are not medical advice or a substitute for a personalized assessment.
           </Typography>
-        </Box>
+        </motion.div>
 
         <Box className="diet-plan-grid">
-          {dietPlans.map((plan) => (
-            <Card className="diet-plan-card" key={plan.title}>
-              <CardContent>
-                <Typography className="diet-plan-focus">{plan.focus}</Typography>
-                <Typography className="diet-plan-title">{plan.title}</Typography>
-                <Typography className="diet-plan-copy">{plan.description}</Typography>
-                <Button
-                  component="a"
-                  href="https://shalinigoswami.netlify.app/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="diet-plan-link"
-                >
-                  Discuss with a nutritionist
-                </Button>
-              </CardContent>
-            </Card>
+          {dietPlans.map((plan, index) => (
+            <motion.div
+              key={plan.title}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{
+                duration: 0.55,
+                delay: index * 0.1,
+                ease: [0.16, 1, 0.3, 1],
+              }}
+              whileHover={{ y: -6, scale: 1.02 }}
+              style={{ height: "100%" }}
+            >
+              <Card className="diet-plan-card" style={{ height: "100%" }}>
+                <CardContent>
+                  <Typography className="diet-plan-focus">{plan.focus}</Typography>
+                  <Typography className="diet-plan-title">{plan.title}</Typography>
+                  <Typography className="diet-plan-copy">{plan.description}</Typography>
+                </CardContent>
+              </Card>
+            </motion.div>
           ))}
         </Box>
-      </Box>
-
-
-      {/* =====================================================
-          DIET CONSULTATION PLANS
-      ===================================================== */}
-
-      <Box className="diet-consult" id="diet-consult">
-
-        <Box className="diet-consult-heading">
-          <Typography className="section-kicker">NUTRITIONIST SUPPORT</Typography>
-          <Typography className="diet-consult-title">Diet consultation plans</Typography>
-          <Typography className="diet-consult-description">
-            Work one-on-one with dietitian Shalini Goswami. Choose a consultation
-            package, share your goals, and get guidance shaped around your routine.
-          </Typography>
-        </Box>
-
-        <Box className="diet-consult-grid">
-
-          {dietConsultPlans.map((plan) => (
-
-            <Card className="diet-consult-card" key={plan.name}>
-
-              <CardContent>
-
-                <Typography className="consult-card-price">
-                  {plan.price}
-                </Typography>
-
-                <Typography className="consult-card-name">
-                  {plan.name}
-                </Typography>
-
-                <Typography className="consult-card-summary">
-                  {plan.summary}
-                </Typography>
-
-                <Box component="ul" className="consult-features">
-
-                  {plan.features.map((feature) => (
-
-                    <Box component="li" key={feature} className="consult-feature">
-                      {feature}
-                    </Box>
-
-                  ))}
-
-                </Box>
-
-                <Button
-                  component="a"
-                  href="https://shalinigoswami.netlify.app/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="consult-book-button"
-                >
-                  Book this plan
-                </Button>
-
-              </CardContent>
-
-            </Card>
-
-          ))}
-
-        </Box>
-
-        <Typography className="diet-consult-note">
-          Consultations are scheduled directly with the nutritionist. These are
-          guidance services, not medical treatment.
-        </Typography>
-
       </Box>
 
 
@@ -2373,232 +2074,94 @@ const Dashboard = () => {
       ===================================================== */}
 
       <motion.div
-
-        initial={{
-          opacity: 0,
-        }}
-
-        whileInView={{
-          opacity: 1,
-        }}
-
-        viewport={{
-          once: true,
-        }}
-
-        transition={{
-          duration: 0.8,
-        }}
-
-        style={{
-          position:
-            "relative",
-
-          zIndex: 2,
-        }}
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+        style={{ position: "relative", zIndex: 2 }}
       >
+        <Box className="site-footer">
 
-        <Box
-          className="footer-brand"
-
-          sx={{
-            maxWidth: "1280px",
-
-            margin:
-              "70px auto 0",
-
-            padding: "40px",
-
-            borderTop:
-              "1.5px solid #12284a",
-
-            display: "flex",
-
-            justifyContent:
-              "space-between",
-
-            alignItems:
-              "center",
-
-            gap: 20,
-
-            "@media (max-width: 700px)":
-              {
-                flexDirection:
-                  "column",
-
-                alignItems:
-                  "flex-start",
-
-                padding:
-                  "30px 15px",
-              },
-          }}
-        >
-
-          {/* BRAND MESSAGE */}
-
-          <Box>
-
-            <Typography
-              sx={{
-                fontFamily:
-                  "Manrope",
-
-                fontSize:
-                  "28px",
-
-                fontWeight:
-                  800,
-
-                color:
-                  "#12284a",
-              }}
-            >
-
-              EAT WELL.
-
+          {/* ── Brand column ── */}
+          <Box className="footer-col footer-col-brand">
+            <Box className="footer-brand-logo">
+              <Restaurant sx={{ fontSize: 26, color: "#12284a" }} />
+              <Typography className="footer-brand-name">
+                FOOD, <span style={{ color: "#e58d9c" }}>Actually</span>
+              </Typography>
+            </Box>
+            <Typography className="footer-tagline">
+              Balanced meals.<br />Everyday nutrition.
             </Typography>
-
-
-            <Typography
-              sx={{
-                fontFamily:
-                  "Manrope",
-
-                fontSize:
-                  "28px",
-
-                fontWeight:
-                  800,
-
-                color:
-                  "#e58d9c",
-              }}
-            >
-
-              FEEL BETTER.
-
+            <Typography className="footer-copy">
+              © {new Date().getFullYear()} Food, Actually. All rights reserved.
             </Typography>
-
-
-            <Typography
-              sx={{
-                fontFamily:
-                  "Manrope",
-
-                fontSize:
-                  "28px",
-
-                fontWeight:
-                  800,
-
-                color:
-                  "#12284a",
-              }}
-            >
-
-              LIVE MORE.
-
-            </Typography>
-
           </Box>
 
+          {/* ── About column ── */}
+          <Box className="footer-col">
+            <Typography className="footer-col-heading">About</Typography>
+            <Box className="footer-links">
+              <Typography className="footer-link" onClick={() => document.querySelector(".how-it-works")?.scrollIntoView({ behavior: "smooth" })}>How it works</Typography>
+              <Typography className="footer-link" onClick={() => document.querySelector(".menu-scroll")?.scrollIntoView({ behavior: "smooth" })}>Our menu</Typography>
+              <Typography className="footer-link" onClick={() => document.getElementById("diet-plans")?.scrollIntoView({ behavior: "smooth" })}>Diet plans</Typography>
+              <Typography className="footer-link" onClick={() => document.querySelector(".reviews-section")?.scrollIntoView({ behavior: "smooth" })}>Customer stories</Typography>
+            </Box>
+          </Box>
 
-          {/* NUTRITIONIST LINK */}
+          {/* ── Company column ── */}
+          <Box className="footer-col">
+            <Typography className="footer-col-heading">Company</Typography>
+            <Box className="footer-links">
+              <Typography className="footer-link" onClick={() => document.querySelector(".team-section, .profiles-section")?.scrollIntoView({ behavior: "smooth" })}>Our team</Typography>
+              <Typography
+                className="footer-link"
+                component="a"
+                href="https://shalinigoswami.netlify.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Nutritionist profile
+              </Typography>
+              <Typography className="footer-link" onClick={() => document.querySelector(".faq-section, .how-it-works")?.scrollIntoView({ behavior: "smooth" })}>FAQ</Typography>
+            </Box>
+          </Box>
 
-          <Box
-            sx={{
-              maxWidth: 420,
-              textAlign: "right",
-
-              "@media (max-width: 700px)":
-                {
-                  textAlign:
-                    "left",
-                  maxWidth:
-                    "100%",
-                },
-            }}
-          >
-
-            <Typography
-              sx={{
-                fontSize: "13px",
-
-                lineHeight: 1.7,
-
-                color: "#667181",
-
-                marginBottom:
-                  "12px",
-              }}
-            >
-
-              Have questions about
-              your nutrition,
-              <br />
-
-              diet or meal choices?
-
-            </Typography>
-
-
-            <Typography
-              component="a"
-
-              href="https://shalinigoswami.netlify.app/"
-
-              target="_blank"
-
-              rel="noopener noreferrer"
-
-              sx={{
-                display:
-                  "inline-block",
-
-                color:
-                  "#12284a",
-
-                fontFamily:
-                  "Manrope",
-
-                fontSize:
-                  "16px",
-
-                fontWeight:
-                  800,
-
-                textDecoration:
-                  "none",
-
-                borderBottom:
-                  "2px solid #e58d9c",
-
-                paddingBottom:
-                  "3px",
-
-                transition:
-                  "all 0.25s ease",
-
-                "&:hover": {
-                  color:
-                    "#e58d9c",
-
-                  borderBottomColor:
-                    "#12284a",
-                },
-              }}
-            >
-
-              Consult with our nutritionist →
-
-            </Typography>
-
+          {/* ── Connect column ── */}
+          <Box className="footer-col">
+            <Typography className="footer-col-heading">Connect</Typography>
+            <Box className="footer-links">
+              <Typography
+                className="footer-link footer-link-icon"
+                component="a"
+                href="https://www.instagram.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+                </svg>
+                Instagram
+              </Typography>
+              <Typography
+                className="footer-link footer-link-icon"
+                component="a"
+                href="mailto:hello@foodactually.in"
+              >
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                </svg>
+                Email us
+              </Typography>
+              <Typography className="footer-link" onClick={() => document.querySelector(".questionnaire-page, #how-it-works")?.scrollIntoView({ behavior: "smooth" })} component="span"
+                onClick={() => { window.location.href = "/questionnaire"; }}
+              >
+                Get in touch
+              </Typography>
+            </Box>
           </Box>
 
         </Box>
-
       </motion.div>
 
 

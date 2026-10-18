@@ -729,7 +729,7 @@ input {
 .salad-card {
   position: relative;
 
-  min-height: 420px;
+  min-height: 300px;
 
   overflow: hidden;
 
@@ -1083,6 +1083,80 @@ input {
   min-height: min(58vh, 430px) !important;
 
   background: #12284a !important;
+}
+
+/* Three-zone inner layout */
+
+.salad-card-photo .salad-card-inner {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  height: 100% !important;
+  padding: 16px !important;
+  gap: 0 !important;
+}
+
+.salad-zone {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+/* top zone — badge, title, macros */
+.salad-zone-top {
+  padding-bottom: 8px;
+}
+
+.salad-macro-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: flex-start;
+  margin-top: 6px;
+}
+
+.salad-macro-pill {
+  display: flex;
+  align-items: baseline;
+  gap: 3px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 20px;
+  padding: 4px 10px;
+}
+
+.salad-macro-value {
+  font-size: 15px !important;
+  font-weight: 800 !important;
+  color: #fff !important;
+  line-height: 1 !important;
+}
+
+.salad-macro-label {
+  font-size: 10px !important;
+  font-weight: 600 !important;
+  color: rgba(255,255,255,0.7) !important;
+  text-transform: lowercase !important;
+  line-height: 1 !important;
+}
+
+/* bottom zone — price + button */
+.salad-zone-bottom {
+  gap: 6px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255,255,255,0.18);
+}
+
+.salad-zone-bottom .price {
+  font-size: 22px !important;
+  color: #fff !important;
+  font-weight: 800 !important;
+  line-height: 1 !important;
+}
+
+.salad-zone-bottom .buy-button {
+  width: 100% !important;
+  margin-top: 0 !important;
 }
 
 
@@ -3530,21 +3604,24 @@ input {
 }
 
 .subscription-plan-card {
-  min-height: 370px;
+  min-height: 240px;
 }
 
 .subscription-plan-card .MuiCardContent-root {
-  min-height: 370px;
+  min-height: 240px;
   align-items: stretch;
 }
 
 .subscription-plan-card .plan-copy {
-  min-height: 58px;
+  min-height: unset;
 }
 
-.subscription-price-list {
-  margin-top: 10px;
-  border-top: 1px solid #d9d2c8;
+.plan-from-price {
+  font-size: 22px !important;
+  font-weight: 800 !important;
+  color: #12284a !important;
+  margin-top: 14px !important;
+  letter-spacing: -0.5px !important;
 }
 
 .subscription-price-row {
@@ -3620,11 +3697,16 @@ input {
 }
 
 .diet-plan-card {
-  min-height: 270px;
+  min-height: 200px;
   border: 1.5px solid #12284a !important;
   border-radius: 8px !important;
   background: #fffaf3 !important;
   box-shadow: 4px 4px 0 #c9dced !important;
+  transition: box-shadow 0.22s ease !important;
+}
+
+.diet-plan-card:hover {
+  box-shadow: 6px 6px 0 #e8a0ac !important;
 }
 
 .diet-plan-card:nth-child(even) {
@@ -3633,7 +3715,7 @@ input {
 
 .diet-plan-card .MuiCardContent-root {
   display: flex;
-  min-height: 270px;
+  min-height: 200px;
   flex-direction: column;
   align-items: flex-start;
   padding: 20px !important;
@@ -3659,23 +3741,6 @@ input {
   color: #596474 !important;
   font-size: 12px !important;
   line-height: 1.6 !important;
-}
-
-.diet-plan-link {
-  margin-top: auto !important;
-  padding: 8px 0 !important;
-  color: #12284a !important;
-  font-size: 11px !important;
-  font-weight: 800 !important;
-  text-align: left;
-  text-decoration: underline !important;
-  text-decoration-color: #e58d9c !important;
-  text-underline-offset: 4px;
-  text-transform: none !important;
-}
-
-.diet-plan-link:hover {
-  color: #a8495b !important;
 }
 
 .how-it-works {
@@ -3941,7 +4006,8 @@ input {
   }
 
   .diet-plan-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
   }
 
   .plan-card:last-child {
@@ -4922,4 +4988,118 @@ input {
   font-size: 16px !important;
   font-weight: 800 !important;
   color: #12284a !important;
+}
+
+
+/* =========================================================
+   SITE FOOTER
+   ========================================================= */
+
+.site-footer {
+  max-width: 1280px;
+  margin: 70px auto 0;
+  padding: 48px 0 32px;
+  border-top: 1.5px solid #12284a;
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr 1fr;
+  gap: 32px 48px;
+  align-items: start;
+}
+
+/* brand column */
+.footer-col-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer-brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 2px;
+}
+
+.footer-brand-name {
+  font-family: "Manrope", sans-serif !important;
+  font-size: 18px !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.5px !important;
+  color: #12284a !important;
+}
+
+.footer-tagline {
+  font-size: 13px !important;
+  color: #667181 !important;
+  line-height: 1.65 !important;
+}
+
+.footer-copy {
+  font-size: 11px !important;
+  color: #a0a8b4 !important;
+  margin-top: 8px !important;
+}
+
+/* link columns */
+.footer-col {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.footer-col-heading {
+  font-size: 11px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase;
+  color: #12284a !important;
+  margin-bottom: 10px !important;
+}
+
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer-link {
+  font-size: 13px !important;
+  color: #667181 !important;
+  cursor: pointer;
+  text-decoration: none !important;
+  transition: color 0.2s !important;
+  width: fit-content;
+}
+
+.footer-link:hover {
+  color: #e58d9c !important;
+}
+
+.footer-link-icon {
+  display: flex !important;
+  align-items: center;
+  gap: 7px;
+}
+
+/* mobile */
+@media (max-width: 750px) {
+  .site-footer {
+    grid-template-columns: 1fr 1fr;
+    gap: 32px 24px;
+    padding: 36px 0 24px;
+  }
+
+  .footer-col-brand {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 420px) {
+  .site-footer {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-col-brand {
+    grid-column: auto;
+  }
 }
