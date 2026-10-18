@@ -2197,71 +2197,6 @@ input {
 
 
 /* =========================================================
-   PURCHASE HISTORY
-   ========================================================= */
-
-.purchase-history {
-  position: relative;
-
-  z-index: 1;
-
-  max-width: 1280px;
-
-  margin: 0 auto;
-
-  border-radius: 28px !important;
-
-  background: #fffaf3 !important;
-
-  border: 1.5px solid #12284a !important;
-
-  color: #12284a !important;
-
-  box-shadow: 7px 7px 0 #e7b5bc !important;
-}
-
-
-.purchase-row {
-  display: flex;
-
-  justify-content: space-between;
-
-  align-items: center;
-
-  padding: 12px 6px;
-
-  border-bottom:
-    1px solid #ddd6cb;
-}
-
-
-.purchase-row:last-child {
-  border-bottom: none;
-}
-
-
-.purchase-icon {
-  width: 46px;
-
-  height: 46px;
-
-  border-radius: 50%;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  background: #f3d7dc;
-
-  border: 1px solid #12284a;
-
-  font-size: 18px;
-}
-
-
-/* =========================================================
    RESPONSIVE
    ========================================================= */
 
@@ -2691,11 +2626,6 @@ input {
     font-size: 52px !important;
   }
 
-
-  .purchase-row {
-    align-items: flex-start;
-  }
-
 }
 
 
@@ -2777,6 +2707,429 @@ input {
   padding: 7px 14px !important;
 
   font-size: 11px !important;
+}
+
+
+/* =========================================================
+   PEOPLE BEHIND YOUR PLATE
+   Both profiles shown side by side, interactive on hover
+   ========================================================= */
+
+.people-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, 1fr);
+
+  gap: 26px;
+}
+
+
+.person-card {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  gap: 16px;
+
+  padding: 26px 22px 22px;
+
+  background: #ffffff;
+
+  border: 2px solid #12284a;
+
+  border-radius: 24px;
+
+  transition:
+    box-shadow 0.3s ease;
+}
+
+
+.person-card:hover {
+  box-shadow: 8px 8px 0 #e7b5bc;
+}
+
+
+.person-image {
+  width: 100%;
+
+  max-width: 250px;
+
+  height: 250px;
+
+  object-fit: cover;
+
+  border-radius: 20px;
+
+  border: 2px solid #12284a;
+
+  transition:
+    transform 0.4s ease;
+}
+
+
+.person-card:hover .person-image {
+  transform: scale(1.05);
+}
+
+
+.person-details {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  text-align: center;
+}
+
+
+.person-name {
+  font-family: "Manrope", sans-serif !important;
+
+  font-size: 24px !important;
+
+  font-weight: 800 !important;
+
+  color: #12284a !important;
+
+  margin-bottom: 2px !important;
+}
+
+
+.person-role {
+  font-size: 12px !important;
+
+  font-weight: 700 !important;
+
+  letter-spacing: 0.8px;
+
+  text-transform: uppercase;
+
+  color: #e58d9c !important;
+
+  margin-bottom: 10px !important;
+}
+
+
+.person-bio {
+  color: #4e5969 !important;
+
+  font-size: 13.5px !important;
+
+  line-height: 1.7 !important;
+
+  margin-bottom: 10px !important;
+}
+
+
+.person-view-link {
+  display: inline-block !important;
+
+  font-weight: 700 !important;
+
+  color: #12284a !important;
+
+  text-decoration: underline !important;
+
+  transition: color 0.25s ease;
+}
+
+
+.person-view-link:hover {
+  color: #e58d9c !important;
+}
+
+
+@media (max-width: 750px) {
+
+  .people-grid {
+    grid-template-columns: 1fr;
+
+    gap: 18px;
+  }
+
+}
+
+
+/* =========================================================
+   DIET CONSULTATION PLANS
+   ========================================================= */
+
+.diet-consult {
+  max-width: 1280px;
+
+  margin: 0 auto;
+
+  padding-top: 26px;
+}
+
+.diet-consult-heading {
+  text-align: center;
+
+  max-width: 720px;
+
+  margin: 0 auto 26px;
+}
+
+.diet-consult-title {
+  font-family: "Manrope", sans-serif !important;
+
+  font-size: 28px !important;
+
+  font-weight: 800 !important;
+
+  color: #12284a !important;
+
+  margin: 6px 0 10px !important;
+}
+
+.diet-consult-description {
+  color: #667181 !important;
+
+  font-size: 14px !important;
+
+  line-height: 1.7 !important;
+}
+
+.diet-consult-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap: 22px;
+
+  align-items: stretch;
+}
+
+.diet-consult-card {
+  background: #fffaf3 !important;
+
+  border: 2px solid #12284a !important;
+
+  border-radius: 24px !important;
+
+  box-shadow: 7px 7px 0 #e7b5bc !important;
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease !important;
+}
+
+.diet-consult-card:hover {
+  transform: translateY(-6px);
+
+  box-shadow: 10px 10px 0 #e7b5bc !important;
+}
+
+.consult-card-price {
+  font-family: "Manrope", sans-serif !important;
+
+  font-size: 30px !important;
+
+  font-weight: 800 !important;
+
+  color: #12284a !important;
+}
+
+.consult-card-name {
+  font-size: 13px !important;
+
+  font-weight: 700 !important;
+
+  letter-spacing: 0.8px;
+
+  text-transform: uppercase;
+
+  color: #e58d9c !important;
+
+  margin: 2px 0 10px !important;
+}
+
+.consult-card-summary {
+  color: #4e5969 !important;
+
+  font-size: 13.5px !important;
+
+  line-height: 1.6 !important;
+
+  margin-bottom: 14px !important;
+}
+
+.consult-features {
+  margin: 0 0 18px !important;
+
+  padding-left: 18px !important;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 8px;
+}
+
+.consult-feature {
+  color: #4e5969 !important;
+
+  font-size: 13px !important;
+
+  line-height: 1.5 !important;
+}
+
+.consult-feature::marker {
+  color: #e58d9c;
+}
+
+.consult-book-button {
+  border-radius: 30px !important;
+
+  background: #12284a !important;
+
+  color: white !important;
+
+  text-transform: uppercase !important;
+
+  letter-spacing: 1px;
+
+  font-size: 12px !important;
+
+  font-weight: 700 !important;
+
+  padding: 9px 18px !important;
+
+  box-shadow: 4px 4px 0 #e58d9c !important;
+
+  transition: all 0.25s ease !important;
+}
+
+.consult-book-button:hover {
+  background: #e58d9c !important;
+
+  color: #12284a !important;
+
+  box-shadow: 2px 2px 0 #12284a !important;
+}
+
+.diet-consult-note {
+  text-align: center;
+
+  color: #8b919a !important;
+
+  font-size: 12px !important;
+
+  margin-top: 18px !important;
+}
+
+@media (max-width: 900px) {
+
+  .diet-consult-grid {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+
+/* =========================================================
+   FAQ
+   ========================================================= */
+
+.faq-section {
+  max-width: 900px;
+
+  margin: 0 auto;
+
+  padding-top: 26px;
+}
+
+.faq-heading {
+  text-align: center;
+
+  max-width: 720px;
+
+  margin: 0 auto 24px;
+}
+
+.faq-title {
+  font-family: "Manrope", sans-serif !important;
+
+  font-size: 28px !important;
+
+  font-weight: 800 !important;
+
+  color: #12284a !important;
+
+  margin: 6px 0 10px !important;
+}
+
+.faq-description {
+  color: #667181 !important;
+
+  font-size: 14px !important;
+
+  line-height: 1.7 !important;
+}
+
+.faq-list {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 14px;
+}
+
+.faq-item {
+  background: #ffffff !important;
+
+  border: 1.5px solid #12284a !important;
+
+  border-radius: 18px !important;
+
+  box-shadow: 4px 4px 0 #e7b5bc !important;
+
+  overflow: hidden;
+}
+
+.faq-item::before {
+  display: none !important;
+}
+
+.faq-item .MuiAccordionSummary-root {
+  padding: 10px 18px !important;
+
+  min-height: 52px !important;
+}
+
+.faq-item .MuiAccordionSummary-root:hover {
+  background: #fffaf3;
+}
+
+.faq-question {
+  font-family: "Manrope", sans-serif !important;
+
+  font-size: 15.5px !important;
+
+  font-weight: 700 !important;
+
+  color: #12284a !important;
+}
+
+.faq-item .MuiAccordionDetails-root {
+  padding: 2px 18px 18px !important;
+}
+
+.faq-answer {
+  color: #4e5969 !important;
+
+  font-size: 14px !important;
+
+  line-height: 1.7 !important;
+}
+
+.faq-item .MuiSvgIcon-root {
+  color: #e58d9c;
 }
 
 

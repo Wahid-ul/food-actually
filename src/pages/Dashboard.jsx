@@ -11,7 +11,9 @@ import {
   Divider,
   Chip,
   useMediaQuery,
-  
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
 } from "@mui/material";
 
 import {
@@ -20,10 +22,12 @@ import {
   Whatshot,
   ChevronLeft,
   ChevronRight,
+  ExpandMore,
 } from "@mui/icons-material";
 
 import { getCurrentUser } from "../utils/auth";
 import DietitianProfile from "../assets/dietatian_profile_closeup.jpeg";
+import WahidProfile from "../assets/Wahid_profile.jpeg";
 import PaneerSaladImage from "../assets/menu/paneer-salad.png";
 import GrilledChickenSaladImage from "../assets/menu/grilled-chicken-salad.png";
 import MilletBowlImage from "../assets/menu/millet-protein-bowl.png";
@@ -47,8 +51,6 @@ const Dashboard = () => {
     localStorage.getItem("userName") ||
     "Wahid";
 
-  const [profileIndex, setProfileIndex] = useState(0);
-  const [touchStartX, setTouchStartX] = useState(0);
   const [paymentModalOpen, setPaymentModalOpen] = useState(false);
 
   const [heroSlide, setHeroSlide] = useState(0);
@@ -90,30 +92,10 @@ const Dashboard = () => {
       role: "Product & Technical Support",
       bio:
         "Contributes to Food, Actually by building the website and developing software tools that power this platform. Focused on creating seamless, user-friendly experiences that make healthy eating accessible and enjoyable for everyone.",
-      image: null,
+      image: WahidProfile,
       href: null,
     },
   ];
-
-
-  const goToNextProfile = () => {
-    setProfileIndex(
-      (prev) => (prev + 1) % profiles.length
-    );
-  };
-
-
-  const goToPreviousProfile = () => {
-    setProfileIndex(
-      (prev) =>
-        (prev - 1 + profiles.length) %
-        profiles.length
-    );
-  };
-
-
-  const currentProfile =
-    profiles[profileIndex];
 
 
   // =========================================================
@@ -332,6 +314,88 @@ const Dashboard = () => {
       title: "Muscle gain",
       focus: "TRAINING + NUTRITION",
       description: "Explore meal choices that support your training routine, with energy and protein needs tailored to you.",
+    },
+  ];
+
+
+  // =========================================================
+  // DIET CONSULTATION PLANS DATA
+  // =========================================================
+
+  const dietConsultPlans = [
+    {
+      name: "Starter consult",
+      price: "₹499",
+      summary:
+        "A single focused session to point your eating habits in the right direction.",
+      features: [
+        "One 45-minute consultation",
+        "Review of your current eating habits",
+        "Simple starting recommendations",
+        "Session notes shared with you",
+      ],
+    },
+    {
+      name: "Monthly guidance",
+      price: "₹1,499",
+      summary:
+        "Ongoing support while you build a routine that actually sticks.",
+      features: [
+        "Two consultations during the month",
+        "A personalized meal framework",
+        "Weekly progress check-ins",
+        "Message support for quick questions",
+      ],
+    },
+    {
+      name: "Quarterly program",
+      price: "₹3,999",
+      summary:
+        "Longer-term partnership for bigger health and fitness goals.",
+      features: [
+        "Six consultations over three months",
+        "Plan updated as your progress evolves",
+        "Priority scheduling and support",
+        "Progress reviews with clear next steps",
+      ],
+    },
+  ];
+
+
+  // =========================================================
+  // FAQ DATA
+  // =========================================================
+
+  const faqs = [
+    {
+      question: "How do I order a meal?",
+      answer:
+        "Browse the menu, pick the dish you like, and choose 'Choose this meal'. You will need an account — then you can pay securely and we prepare your order fresh.",
+    },
+    {
+      question: "Do you deliver the meals?",
+      answer:
+        "Yes — prepared meals can be delivered to your home or workplace. Delivery details and any applicable charges are shared with your order confirmation.",
+    },
+    {
+      question: "How do the meal subscription plans work?",
+      answer:
+        "Choose a 7-day, 30-day or 90-day plan covering lunch, dinner, or both. Pricing estimates use current menu prices, and your final total depends on the dishes you select.",
+    },
+    {
+      question: "Can I get meals for specific dietary preferences?",
+      answer:
+        "The menu includes vegetarian, high-protein and plant-forward options. For more specific needs, our nutritionist can help you choose meals that fit your goals.",
+    },
+    {
+      question: "How do reward points work?",
+      answer:
+        "You earn 10 reward points every time you purchase a meal. Points are added to your account automatically after a successful payment.",
+    },
+    {
+      question: "Can I talk to a nutritionist before ordering?",
+      answer:
+        "Absolutely. You can book a consultation with our dietitian Shalini Goswami through the diet consultation plans or the diet plan starting points on this page.",
     },
   ];
 
@@ -1462,6 +1526,79 @@ const Dashboard = () => {
 
 
       {/* =====================================================
+          DIET CONSULTATION PLANS
+      ===================================================== */}
+
+      <Box className="diet-consult" id="diet-consult">
+
+        <Box className="diet-consult-heading">
+          <Typography className="section-kicker">NUTRITIONIST SUPPORT</Typography>
+          <Typography className="diet-consult-title">Diet consultation plans</Typography>
+          <Typography className="diet-consult-description">
+            Work one-on-one with dietitian Shalini Goswami. Choose a consultation
+            package, share your goals, and get guidance shaped around your routine.
+          </Typography>
+        </Box>
+
+        <Box className="diet-consult-grid">
+
+          {dietConsultPlans.map((plan) => (
+
+            <Card className="diet-consult-card" key={plan.name}>
+
+              <CardContent>
+
+                <Typography className="consult-card-price">
+                  {plan.price}
+                </Typography>
+
+                <Typography className="consult-card-name">
+                  {plan.name}
+                </Typography>
+
+                <Typography className="consult-card-summary">
+                  {plan.summary}
+                </Typography>
+
+                <Box component="ul" className="consult-features">
+
+                  {plan.features.map((feature) => (
+
+                    <Box component="li" key={feature} className="consult-feature">
+                      {feature}
+                    </Box>
+
+                  ))}
+
+                </Box>
+
+                <Button
+                  component="a"
+                  href="https://shalinigoswami.netlify.app/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="consult-book-button"
+                >
+                  Book this plan
+                </Button>
+
+              </CardContent>
+
+            </Card>
+
+          ))}
+
+        </Box>
+
+        <Typography className="diet-consult-note">
+          Consultations are scheduled directly with the nutritionist. These are
+          guidance services, not medical treatment.
+        </Typography>
+
+      </Box>
+
+
+      {/* =====================================================
           WHAT'S TRENDING
       ===================================================== */}
 
@@ -1994,6 +2131,54 @@ const Dashboard = () => {
 
 
       {/* =====================================================
+          FAQ
+      ===================================================== */}
+
+      <Box className="faq-section" id="faq">
+
+        <Box className="faq-heading">
+          <Typography className="section-kicker">GOOD TO KNOW</Typography>
+          <Typography className="faq-title">Frequently asked questions</Typography>
+          <Typography className="faq-description">
+            Quick answers about ordering, subscriptions, delivery and rewards.
+          </Typography>
+        </Box>
+
+        <Box className="faq-list">
+
+          {faqs.map((faq) => (
+
+            <Accordion key={faq.question} className="faq-item" disableGutters>
+
+              <AccordionSummary
+                expandIcon={<ExpandMore />}
+                className="faq-item-summary"
+              >
+
+                <Typography className="faq-question">
+                  {faq.question}
+                </Typography>
+
+              </AccordionSummary>
+
+              <AccordionDetails className="faq-item-details">
+
+                <Typography className="faq-answer">
+                  {faq.answer}
+                </Typography>
+
+              </AccordionDetails>
+
+            </Accordion>
+
+          ))}
+
+        </Box>
+
+      </Box>
+
+
+      {/* =====================================================
           PEOPLE BEHIND THIS
       ===================================================== */}
 
@@ -2048,697 +2233,145 @@ const Dashboard = () => {
             }}
           >
 
-            {/* PROFILE CONTROLS */}
+            {/* PEOPLE GRID — BOTH PROFILES SIDE BY SIDE */}
 
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent:
-                  "flex-end",
+            <Box className="people-grid">
 
-                gap: 1,
+              {profiles.map(
+                (profile, index) => (
 
-                marginBottom: 2,
-              }}
-            >
+                  <motion.div
+                    key={profile.name}
+                    className="person-card"
 
-              <Button
-                variant="outlined"
-                onClick={
-                  goToPreviousProfile
-                }
-
-                sx={{
-                  minWidth: "40px",
-                  width: "40px",
-                  height: "40px",
-
-                  borderColor:
-                    "#12284a",
-
-                  color: "#12284a",
-
-                  borderRadius: "50%",
-
-                  padding: 0,
-                }}
-              >
-
-                <ChevronLeft />
-
-              </Button>
-
-
-              <Button
-                variant="outlined"
-                onClick={
-                  goToNextProfile
-                }
-
-                sx={{
-                  minWidth: "40px",
-                  width: "40px",
-                  height: "40px",
-
-                  borderColor:
-                    "#12284a",
-
-                  color: "#12284a",
-
-                  borderRadius: "50%",
-
-                  padding: 0,
-                }}
-              >
-
-                <ChevronRight />
-
-              </Button>
-
-            </Box>
-
-
-            {/* PROFILE */}
-
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                gap: 3,
-
-                minHeight: 260,
-
-                "@media (max-width: 700px)":
-                  {
-                    flexDirection:
-                      "column",
-
-                    alignItems:
-                      "flex-start",
-
-                    gap: 2,
-
-                    minHeight: 0,
-                  },
-              }}
-
-              onTouchStart={(
-                event
-              ) =>
-                setTouchStartX(
-                  event.touches[0]
-                    .clientX
-                )
-              }
-
-              onTouchEnd={(
-                event
-              ) => {
-
-                const delta =
-                  event.changedTouches[0]
-                    .clientX -
-                  touchStartX;
-
-
-                if (delta > 40) {
-
-                  goToPreviousProfile();
-
-                } else if (
-                  delta < -40
-                ) {
-
-                  goToNextProfile();
-
-                }
-
-              }}
-            >
-
-              {/* PROFILE IMAGE */}
-
-              {currentProfile.image ? (
-
-                <Box
-                  component={
-                    currentProfile.href
-                      ? "a"
-                      : "div"
-                  }
-
-                  href={
-                    currentProfile.href ||
-                    undefined
-                  }
-
-                  target={
-                    currentProfile.href
-                      ? "_blank"
-                      : undefined
-                  }
-
-                  rel={
-                    currentProfile.href
-                      ? "noopener noreferrer"
-                      : undefined
-                  }
-
-                  sx={{
-                    display:
-                      "block",
-
-                    flexShrink: 0,
-
-                    textDecoration:
-                      "none",
-                  }}
-                >
-
-                  <img
-                    src={
-                      currentProfile.image
-                    }
-
-                    alt={
-                      currentProfile.name
-                    }
-
-                    loading="lazy"
-
-                    decoding="async"
-
-                    style={{
-                      width: 220,
-                      height: 220,
-
-                      objectFit:
-                        "cover",
-
-                      borderRadius:
-                        "22px",
-
-                      border:
-                        "2px solid #12284a",
-
-                      display:
-                        "block",
+                    initial={{
+                      opacity: 0,
+                      y: 28,
                     }}
-                  />
 
-                </Box>
+                    whileInView={{
+                      opacity: 1,
+                      y: 0,
+                    }}
 
-              ) : (
+                    viewport={{
+                      once: true,
+                    }}
 
-                <Box
-                  sx={{
-                    width: 220,
-                    height: 220,
+                    transition={{
+                      duration: 0.55,
+                      delay: index * 0.15,
+                    }}
 
-                    borderRadius:
-                      "22px",
+                    whileHover={{
+                      y: -6,
 
-                    border:
-                      "2px solid #12284a",
+                      transition: {
+                        duration: 0.25,
+                      },
+                    }}
+                  >
 
-                    background:
-                      "linear-gradient(135deg, #e58d9c 0%, #dce9f3 100%)",
+                    {/* PROFILE IMAGE */}
 
-                    display:
-                      "flex",
+                    <Box
+                      component={
+                        profile.href
+                          ? "a"
+                          : "div"
+                      }
 
-                    alignItems:
-                      "center",
+                      href={
+                        profile.href ||
+                        undefined
+                      }
 
-                    justifyContent:
-                      "center",
+                      target={
+                        profile.href
+                          ? "_blank"
+                          : undefined
+                      }
 
-                    fontFamily:
-                      "Manrope",
+                      rel={
+                        profile.href
+                          ? "noopener noreferrer"
+                          : undefined
+                      }
 
-                    fontWeight: 800,
+                      sx={{
+                        display: "block",
 
-                    fontSize: "68px",
+                        textDecoration:
+                          "none",
+                      }}
+                    >
 
-                    color: "#12284a",
+                      <Box
+                        component="img"
+                        src={profile.image}
+                        alt={profile.name}
+                        loading="lazy"
+                        decoding="async"
+                        className="person-image"
+                      />
 
-                    flexShrink: 0,
-                  }}
-                >
+                    </Box>
 
-                  {userName
-                    .slice(0, 2)
-                    .toUpperCase()}
 
-                </Box>
+                    {/* PROFILE DETAILS */}
 
+                    <Box className="person-details">
+
+                      <Typography className="person-name">
+
+                        {profile.name}
+
+                      </Typography>
+
+
+                      <Typography className="person-role">
+
+                        {profile.role}
+
+                      </Typography>
+
+
+                      <Typography className="person-bio">
+
+                        {profile.bio}
+
+                      </Typography>
+
+
+                      {profile.href ? (
+
+                        <Typography
+                          component="a"
+
+                          href={profile.href}
+
+                          target="_blank"
+
+                          rel="noopener noreferrer"
+
+                          className="person-view-link"
+                        >
+
+                          View profile
+
+                        </Typography>
+
+                      ) : null}
+
+                    </Box>
+
+                  </motion.div>
+
+                )
               )}
 
-
-              {/* PROFILE DETAILS */}
-
-              <Box
-                sx={{
-                  flex: 1,
-
-                  "@media (max-width: 700px)":
-                    {
-                      width: "100%",
-                    },
-                }}
-              >
-
-                <Typography
-                  sx={{
-                    fontFamily:
-                      "Manrope",
-
-                    fontSize: "28px",
-
-                    fontWeight: 800,
-
-                    color: "#12284a",
-
-                    marginBottom: "4px",
-
-                    "@media (max-width: 700px)":
-                      {
-                        fontSize:
-                          "22px",
-                      },
-                  }}
-                >
-
-                  {currentProfile.name}
-
-                </Typography>
-
-
-                <Typography
-                  sx={{
-                    fontSize: "15px",
-
-                    fontWeight: 700,
-
-                    color: "#e58d9c",
-
-                    letterSpacing:
-                      "0.8px",
-
-                    textTransform:
-                      "uppercase",
-
-                    marginBottom:
-                      "12px",
-                  }}
-                >
-
-                  {currentProfile.role}
-
-                </Typography>
-
-
-                <Typography
-                  sx={{
-                    color: "#4e5969",
-
-                    fontSize: "15px",
-
-                    lineHeight: 1.7,
-
-                    marginBottom:
-                      "12px",
-                  }}
-                >
-
-                  {currentProfile.bio}
-
-                </Typography>
-
-
-                {currentProfile.href ? (
-
-                  <Typography
-                    component="a"
-
-                    href={
-                      currentProfile.href
-                    }
-
-                    target="_blank"
-
-                    rel="noopener noreferrer"
-
-                    sx={{
-                      display:
-                        "inline-block",
-
-                      fontWeight: 700,
-
-                      color: "#12284a",
-
-                      textDecoration:
-                        "underline",
-                    }}
-                  >
-
-                    View profile
-
-                  </Typography>
-
-                ) : null}
-
-              </Box>
-
             </Box>
 
-          </CardContent>
-
-        </Card>
-
-      </motion.div>
-
-
-      {/* =====================================================
-          RECENT PURCHASES
-      ===================================================== */}
-
-      <motion.div
-
-        initial={{
-          opacity: 0,
-          y: 25,
-        }}
-
-        whileInView={{
-          opacity: 1,
-          y: 0,
-        }}
-
-        viewport={{
-          once: true,
-        }}
-      >
-
-        <Typography className="section-title">
-
-          Your recent meals
-
-        </Typography>
-
-
-        <Card className="purchase-history">
-
-          <CardContent>
-
-            {/* PURCHASE 1 */}
-
-            <Box className="purchase-row">
-
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 12,
-                }}
-              >
-
-                <Box className="purchase-icon">
-
-                  🥗
-
-                </Box>
-
-
-                <Box>
-
-                  <Typography
-                    sx={{
-                      color:
-                        "#12284a",
-
-                      fontWeight: 700,
-                    }}
-                  >
-
-                    Paneer Salad
-
-                  </Typography>
-
-
-                  <Typography
-                    sx={{
-                      color:
-                        "#737b87",
-
-                      fontSize:
-                        "12px",
-                    }}
-                  >
-
-                    Today
-
-                  </Typography>
-
-                </Box>
-
-              </Box>
-
-
-              <Box
-                sx={{
-                  textAlign:
-                    "right",
-                }}
-              >
-
-                <Typography
-                  sx={{
-                    color:
-                      "#12284a",
-
-                    fontWeight: 700,
-                  }}
-                >
-
-                  ₹269
-
-                </Typography>
-
-
-                <Typography
-                  sx={{
-                    color:
-                      "#6f9362",
-
-                    fontSize:
-                      "12px",
-
-                    fontWeight: 600,
-                  }}
-                >
-
-                  +10 points
-
-                </Typography>
-
-              </Box>
-
-            </Box>
-
-
-            {/* PURCHASE 2 */}
-
-            <Box className="purchase-row">
-
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems:
-                    "center",
-                  gap: 12,
-                }}
-              >
-
-                <Box className="purchase-icon">
-
-                  🥗
-
-                </Box>
-
-
-                <Box>
-
-                  <Typography
-                    sx={{
-                      color:
-                        "#12284a",
-
-                      fontWeight: 700,
-                    }}
-                  >
-
-                    Grilled Chicken Salad
-
-                  </Typography>
-
-
-                  <Typography
-                    sx={{
-                      color:
-                        "#737b87",
-
-                      fontSize:
-                        "12px",
-                    }}
-                  >
-
-                    Aug 08
-
-                  </Typography>
-
-                </Box>
-
-              </Box>
-
-
-              <Box
-                sx={{
-                  textAlign:
-                    "right",
-                }}
-              >
-
-                <Typography
-                  sx={{
-                    color:
-                      "#12284a",
-
-                    fontWeight: 700,
-                  }}
-                >
-
-                  ₹299
-
-                </Typography>
-
-
-                <Typography
-                  sx={{
-                    color:
-                      "#6f9362",
-
-                    fontSize:
-                      "12px",
-
-                    fontWeight: 600,
-                  }}
-                >
-
-                  +10 points
-
-                </Typography>
-
-              </Box>
-
-            </Box>
-
-
-            {/* PURCHASE 3 */}
-
-            <Box className="purchase-row">
-
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems:
-                    "center",
-                  gap: 12,
-                }}
-              >
-
-                <Box className="purchase-icon">
-
-                  🥗
-
-                </Box>
-
-
-                <Box>
-
-                  <Typography
-                    sx={{
-                      color:
-                        "#12284a",
-
-                      fontWeight: 700,
-                    }}
-                  >
-
-                    Millet Protein Bowl
-
-                  </Typography>
-
-
-                  <Typography
-                    sx={{
-                      color:
-                        "#737b87",
-
-                      fontSize:
-                        "12px",
-                    }}
-                  >
-
-                    Aug 05
-
-                  </Typography>
-
-                </Box>
-
-              </Box>
-
-
-              <Box
-                sx={{
-                  textAlign:
-                    "right",
-                }}
-              >
-
-                <Typography
-                  sx={{
-                    color:
-                      "#12284a",
-
-                    fontWeight: 700,
-                  }}
-                >
-
-                  ₹249
-
-                </Typography>
-
-
-                <Typography
-                  sx={{
-                    color:
-                      "#6f9362",
-
-                    fontSize:
-                      "12px",
-
-                    fontWeight: 600,
-                  }}
-                >
-
-                  +10 points
-
-                </Typography>
-
-              </Box>
-
-            </Box>
 
           </CardContent>
 
