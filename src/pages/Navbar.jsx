@@ -105,9 +105,9 @@ const Navbar = ({
         aria-label="Main navigation"
         className="dashboard-nav"
       >
-        <Button onClick={() => document.querySelector(".menu-scroll")?.scrollIntoView({ behavior: "smooth" })}>Meals</Button>
-        <Button onClick={() => document.querySelector(".meal-plans")?.scrollIntoView({ behavior: "smooth" })}>Meal options</Button>
-        <Button onClick={() => document.querySelector(".how-it-works")?.scrollIntoView({ behavior: "smooth" })}>How it works</Button>
+        <Button onClick={() => navigate("/")}>Home</Button>
+        <Button onClick={() => navigate("/plans")}>Plans</Button>
+        <Button onClick={() => document.querySelector(".how-it-works")?.scrollIntoView({ behavior: "smooth" })}>About</Button>
       </Box>
 
 

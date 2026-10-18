@@ -3967,3 +3967,910 @@ input {
     font-size: 10px !important;
   }
 }
+
+
+/* =========================================================
+   QUESTIONNAIRE PAGE
+   ========================================================= */
+
+.questionnaire-page {
+  min-height: 100vh;
+  background:
+    radial-gradient(
+      circle at 0% 0%,
+      rgba(232, 143, 157, 0.18),
+      transparent 23%
+    ),
+    radial-gradient(
+      circle at 100% 100%,
+      rgba(181, 205, 225, 0.35),
+      transparent 28%
+    ),
+    #f8f4ec;
+  padding-bottom: 70px;
+}
+
+.questionnaire-container {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 32px 20px 0;
+}
+
+/* ── header ────────────────────────────────────────────── */
+
+.questionnaire-header {
+  text-align: center;
+  margin-bottom: 36px;
+}
+
+.questionnaire-kicker {
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.12em !important;
+  color: #e58d9c !important;
+  margin-bottom: 8px !important;
+}
+
+.questionnaire-title {
+  font-size: clamp(26px, 5vw, 38px) !important;
+  font-weight: 800 !important;
+  color: #12284a !important;
+  line-height: 1.15 !important;
+  margin-bottom: 10px !important;
+}
+
+.questionnaire-subtitle {
+  font-size: 15px !important;
+  color: #667181 !important;
+  max-width: 520px;
+  margin: 0 auto !important;
+}
+
+/* ── step progress ─────────────────────────────────────── */
+
+.questionnaire-progress-wrap {
+  margin-bottom: 32px;
+}
+
+.questionnaire-step-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  gap: 8px;
+}
+
+.questionnaire-step-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  opacity: 0.4;
+  transition: opacity 0.3s;
+  flex: 1;
+}
+
+.questionnaire-step-label.active,
+.questionnaire-step-label.done {
+  opacity: 1;
+}
+
+.step-dot {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #e8e1d8;
+  color: #12284a;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.3s, color 0.3s;
+}
+
+.questionnaire-step-label.active .step-dot {
+  background: #12284a;
+  color: #f8f4ec;
+}
+
+.questionnaire-step-label.done .step-dot {
+  background: #e58d9c;
+  color: #fff;
+}
+
+.step-label-text {
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  color: #12284a !important;
+  white-space: nowrap;
+}
+
+.questionnaire-progress-bar {
+  height: 6px !important;
+  border-radius: 10px !important;
+  background-color: #e8e1d8 !important;
+}
+
+.questionnaire-progress-bar .MuiLinearProgress-bar {
+  background-color: #12284a !important;
+  border-radius: 10px !important;
+  transition: transform 0.6s ease !important;
+}
+
+/* ── card wrap & card ──────────────────────────────────── */
+
+.questionnaire-card-wrap {
+  position: relative;
+  overflow: hidden;
+}
+
+.questionnaire-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 36px 36px 28px;
+  box-shadow: 0 4px 32px rgba(18, 40, 74, 0.08);
+  border: 1px solid rgba(18, 40, 74, 0.07);
+}
+
+@media (max-width: 600px) {
+  .questionnaire-card {
+    padding: 24px 18px 20px;
+  }
+}
+
+/* ── step content ──────────────────────────────────────── */
+
+.q-step-content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.q-step-heading {
+  font-size: 22px !important;
+  font-weight: 800 !important;
+  color: #12284a !important;
+  margin-bottom: -8px !important;
+}
+
+.q-step-desc {
+  font-size: 14px !important;
+  color: #667181 !important;
+  line-height: 1.6 !important;
+}
+
+/* ── fields ────────────────────────────────────────────── */
+
+.q-fields-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+@media (max-width: 560px) {
+  .q-fields-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.q-field .MuiOutlinedInput-root {
+  border-radius: 10px;
+  background: #faf8f5;
+}
+
+.q-field .MuiOutlinedInput-root:hover fieldset {
+  border-color: #12284a;
+}
+
+.q-field .MuiOutlinedInput-root.Mui-focused fieldset {
+  border-color: #12284a;
+}
+
+.q-field label.Mui-focused {
+  color: #12284a;
+}
+
+.q-field-icon {
+  color: #a0a8b4 !important;
+  font-size: 20px !important;
+}
+
+/* ── radio groups ──────────────────────────────────────── */
+
+.q-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.q-section-label {
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  color: #12284a !important;
+}
+
+.q-optional {
+  font-weight: 400;
+  color: #a0a8b4;
+}
+
+.q-radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.q-radio-group-row {
+  flex-direction: row !important;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.q-radio-option {
+  border: 1.5px solid #e8e1d8;
+  border-radius: 10px;
+  padding: 8px 14px;
+  margin: 0 !important;
+  transition: border-color 0.2s, background 0.2s;
+  background: #faf8f5;
+}
+
+.q-radio-option.selected {
+  border-color: #12284a;
+  background: rgba(18, 40, 74, 0.04);
+}
+
+.q-radio-option-sm {
+  flex: 1;
+  min-width: 72px;
+  justify-content: center;
+}
+
+.q-radio-option .MuiFormControlLabel-label {
+  font-size: 14px;
+  color: #12284a;
+}
+
+.q-radio.Mui-checked {
+  color: #12284a !important;
+}
+
+/* ── checkboxes ────────────────────────────────────────── */
+
+.q-checkbox-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+@media (max-width: 500px) {
+  .q-checkbox-group {
+    grid-template-columns: 1fr;
+  }
+}
+
+.q-checkbox-option {
+  border: 1.5px solid #e8e1d8;
+  border-radius: 10px;
+  padding: 6px 12px;
+  margin: 0 !important;
+  background: #faf8f5;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.q-checkbox-option.selected {
+  border-color: #12284a;
+  background: rgba(18, 40, 74, 0.04);
+}
+
+.q-checkbox-option .MuiFormControlLabel-label {
+  font-size: 14px;
+  color: #12284a;
+}
+
+.q-checkbox.Mui-checked {
+  color: #12284a !important;
+}
+
+/* ── goal grid ─────────────────────────────────────────── */
+
+.q-goal-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+@media (max-width: 640px) {
+  .q-goal-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 420px) {
+  .q-goal-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.q-goal-card {
+  position: relative;
+  border: 2px solid #e8e1d8;
+  border-radius: 14px;
+  padding: 18px 16px;
+  background: #faf8f5;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s, transform 0.2s;
+  outline: none;
+}
+
+.q-goal-card:hover {
+  border-color: #b5cde1;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(18, 40, 74, 0.08);
+}
+
+.q-goal-card:focus-visible {
+  outline: 2px solid #12284a;
+  outline-offset: 2px;
+}
+
+.q-goal-card.selected {
+  border-color: #12284a;
+  background: rgba(18, 40, 74, 0.05);
+}
+
+.q-goal-emoji {
+  font-size: 26px !important;
+  margin-bottom: 8px !important;
+  display: block;
+}
+
+.q-goal-title {
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  color: #12284a !important;
+  margin-bottom: 6px !important;
+}
+
+.q-goal-desc {
+  font-size: 12px !important;
+  color: #667181 !important;
+  line-height: 1.5 !important;
+}
+
+.q-goal-check {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #12284a;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── errors ────────────────────────────────────────────── */
+
+.q-error {
+  font-size: 12px !important;
+  color: #d32f2f !important;
+  margin-top: -4px !important;
+}
+
+.q-error-center {
+  text-align: center !important;
+  margin-top: 8px !important;
+}
+
+/* ── navigation ────────────────────────────────────────── */
+
+.questionnaire-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 24px;
+  gap: 12px;
+}
+
+.q-btn-back {
+  color: #12284a !important;
+  border: 1.5px solid #e8e1d8 !important;
+  border-radius: 10px !important;
+  padding: 10px 22px !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+  background: #fff !important;
+  transition: border-color 0.2s !important;
+}
+
+.q-btn-back:hover {
+  border-color: #12284a !important;
+}
+
+.q-btn-next,
+.q-btn-submit {
+  background: #12284a !important;
+  color: #f8f4ec !important;
+  border-radius: 10px !important;
+  padding: 10px 28px !important;
+  font-weight: 700 !important;
+  text-transform: none !important;
+  letter-spacing: 0.01em !important;
+  box-shadow: none !important;
+  transition: background 0.2s !important;
+}
+
+.q-btn-next:hover,
+.q-btn-submit:hover {
+  background: #1a3a6b !important;
+}
+
+.q-btn-submit {
+  background: #e58d9c !important;
+  color: #fff !important;
+}
+
+.q-btn-submit:hover {
+  background: #d47588 !important;
+}
+
+/* ── success screen ────────────────────────────────────── */
+
+.questionnaire-success {
+  max-width: 520px;
+  margin: 80px auto 0;
+  text-align: center;
+  padding: 48px 32px;
+  background: #fff;
+  border-radius: 24px;
+  box-shadow: 0 8px 40px rgba(18, 40, 74, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.success-icon {
+  font-size: 64px !important;
+  color: #e58d9c !important;
+}
+
+.success-title {
+  font-size: 26px !important;
+  font-weight: 800 !important;
+  color: #12284a !important;
+  line-height: 1.2 !important;
+}
+
+.success-body {
+  font-size: 15px !important;
+  color: #667181 !important;
+  line-height: 1.65 !important;
+}
+
+.success-cta {
+  margin-top: 8px !important;
+  background: #12284a !important;
+  color: #f8f4ec !important;
+  border-radius: 10px !important;
+  padding: 12px 32px !important;
+  font-weight: 700 !important;
+  text-transform: none !important;
+}
+
+.success-cta:hover {
+  background: #1a3a6b !important;
+}
+
+/* ── how-it-works step card click hint ─────────────────── */
+
+.step-card-clickable {
+  cursor: pointer;
+  transition: transform 0.22s ease, box-shadow 0.22s ease !important;
+}
+
+.step-card-clickable:hover {
+  transform: translateY(-4px) !important;
+  box-shadow: 0 10px 30px rgba(18, 40, 74, 0.12) !important;
+}
+
+.step-cta-hint {
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  color: #e58d9c !important;
+  letter-spacing: 0.04em !important;
+  margin-top: 6px !important;
+}
+
+
+/* =========================================================
+   PLANS PAGE
+   ========================================================= */
+
+.plans-page {
+  padding-bottom: 80px;
+}
+
+.plans-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px 20px 0;
+}
+
+/* ── hero ──────────────────────────────────────────────── */
+
+.plans-hero {
+  text-align: center;
+  padding: 40px 0 36px;
+}
+
+.plans-hero-kicker {
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.14em !important;
+  color: #e58d9c !important;
+  margin-bottom: 10px !important;
+}
+
+.plans-hero-title {
+  font-size: clamp(28px, 5vw, 44px) !important;
+  font-weight: 800 !important;
+  color: #12284a !important;
+  line-height: 1.15 !important;
+  margin-bottom: 14px !important;
+}
+
+.plans-hero-subtitle {
+  font-size: 16px !important;
+  color: #667181 !important;
+  max-width: 600px;
+  margin: 0 auto !important;
+  line-height: 1.65 !important;
+}
+
+/* ── tabs ──────────────────────────────────────────────── */
+
+.plans-tabs {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+}
+
+.plans-tab-btn {
+  border: 2px solid #e8e1d8 !important;
+  border-radius: 30px !important;
+  padding: 9px 22px !important;
+  font-weight: 600 !important;
+  font-size: 13px !important;
+  text-transform: none !important;
+  color: #667181 !important;
+  background: #fff !important;
+  transition: all 0.2s !important;
+  gap: 6px;
+}
+
+.plans-tab-btn:hover {
+  border-color: #12284a !important;
+  color: #12284a !important;
+}
+
+.plans-tab-btn.active {
+  background: #12284a !important;
+  border-color: #12284a !important;
+  color: #f8f4ec !important;
+}
+
+/* ── section intro ─────────────────────────────────────── */
+
+.plans-section-intro {
+  text-align: center;
+  margin-bottom: 36px;
+}
+
+.plans-section-title {
+  font-size: 26px !important;
+  font-weight: 800 !important;
+  color: #12284a !important;
+  margin-bottom: 10px !important;
+}
+
+.plans-section-desc {
+  font-size: 14px !important;
+  color: #667181 !important;
+  max-width: 620px;
+  margin: 0 auto !important;
+  line-height: 1.65 !important;
+}
+
+/* ── cards grid ────────────────────────────────────────── */
+
+.plans-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  align-items: start;
+}
+
+.plans-grid-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+@media (max-width: 900px) {
+  .plans-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 580px) {
+  .plans-grid,
+  .plans-grid-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+.plans-card-wrap {
+  height: 100%;
+}
+
+.plans-card {
+  border-radius: 18px !important;
+  border: 2px solid transparent !important;
+  box-shadow: 0 2px 16px rgba(18, 40, 74, 0.07) !important;
+  position: relative;
+  height: 100%;
+  transition: box-shadow 0.22s !important;
+}
+
+.plans-card:hover {
+  box-shadow: 0 8px 32px rgba(18, 40, 74, 0.13) !important;
+}
+
+.plans-card-content {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 14px !important;
+  padding: 24px !important;
+}
+
+/* popular badge */
+.plans-popular-chip {
+  position: absolute !important;
+  top: -12px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  color: #fff !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.08em !important;
+  height: 24px !important;
+}
+
+/* card header */
+.plans-card-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.plans-card-emoji {
+  font-size: 32px !important;
+  line-height: 1 !important;
+  flex-shrink: 0;
+}
+
+.plans-card-term {
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.1em !important;
+  color: #a0a8b4 !important;
+  margin-bottom: 2px !important;
+}
+
+.plans-card-title {
+  font-size: 17px !important;
+  font-weight: 800 !important;
+  color: #12284a !important;
+  line-height: 1.2 !important;
+}
+
+/* description */
+.plans-card-desc {
+  font-size: 13px !important;
+  color: #667181 !important;
+  line-height: 1.6 !important;
+}
+
+/* consult price */
+.plans-consult-price {
+  font-size: 28px !important;
+  font-weight: 800 !important;
+  line-height: 1 !important;
+}
+
+/* highlights */
+.plans-highlights {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.plans-sub-label {
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.08em !important;
+  color: #a0a8b4 !important;
+  margin-bottom: 4px !important;
+  text-transform: uppercase;
+}
+
+.plans-highlight-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.plans-highlight-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.plans-highlight-text {
+  font-size: 13px !important;
+  color: #12284a !important;
+}
+
+/* divider */
+.plans-divider {
+  border-color: rgba(18, 40, 74, 0.08) !important;
+}
+
+/* pricing list */
+.plans-price-label {
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.08em !important;
+  color: #a0a8b4 !important;
+  text-transform: uppercase;
+}
+
+.plans-price-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.plans-price-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.plans-price-option {
+  font-size: 13px !important;
+  color: #667181 !important;
+}
+
+.plans-price-value {
+  font-size: 13px !important;
+  font-weight: 700 !important;
+}
+
+/* meal tags */
+.plans-meal-tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.plans-meal-tag {
+  border: 1.5px solid !important;
+  background: transparent !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  border-radius: 20px !important;
+}
+
+/* feature list (consult) */
+.plans-feature-list {
+  list-style: none;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.plans-feature-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #12284a;
+}
+
+/* CTA button */
+.plans-choose-btn {
+  color: #fff !important;
+  border-radius: 10px !important;
+  padding: 11px 20px !important;
+  font-weight: 700 !important;
+  text-transform: none !important;
+  font-size: 14px !important;
+  box-shadow: none !important;
+  margin-top: auto !important;
+  width: 100%;
+  transition: filter 0.2s !important;
+}
+
+.plans-choose-btn:hover {
+  filter: brightness(1.1);
+}
+
+/* pricing note */
+.plans-pricing-note {
+  text-align: center !important;
+  font-size: 12px !important;
+  color: #a0a8b4 !important;
+  margin-top: 20px !important;
+}
+
+/* ── questionnaire "you chose" pill ────────────────────── */
+
+.plans-q-selected-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #fff;
+  border: 1.5px solid #e8e1d8;
+  border-radius: 30px;
+  padding: 8px 18px;
+  width: fit-content;
+  margin: 0 auto 20px;
+}
+
+.plans-q-selected-label {
+  font-size: 12px !important;
+  color: #a0a8b4 !important;
+  font-weight: 600 !important;
+}
+
+.plans-q-selected-name {
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  color: #12284a !important;
+}
+
+/* ── success screen plan badge ─────────────────────────── */
+
+.success-plan-badge {
+  background: #f8f4ec;
+  border: 1.5px solid #e8e1d8;
+  border-radius: 12px;
+  padding: 10px 24px;
+  text-align: center;
+}
+
+.success-plan-label {
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.1em !important;
+  color: #a0a8b4 !important;
+  text-transform: uppercase;
+  margin-bottom: 2px !important;
+}
+
+.success-plan-name {
+  font-size: 16px !important;
+  font-weight: 800 !important;
+  color: #12284a !important;
+}

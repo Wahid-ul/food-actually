@@ -932,28 +932,34 @@ const Dashboard = () => {
           </motion.svg>
           <Box className="step-position step-explore">
             <motion.div
-              className="step-card"
+              className="step-card step-card-clickable"
               variants={{
                 hidden: { opacity: 0, x: 130 },
                 visible: { opacity: 1, x: 0, transition: { duration: 1.35, delay: 0.28, ease: [0.16, 1, 0.3, 1] } },
               }}
+              onClick={() => document.querySelector(".menu-scroll")?.scrollIntoView({ behavior: "smooth" })}
+              style={{ cursor: "pointer" }}
             >
               <Typography className="step-number">01</Typography>
               <Typography className="step-title">Explore the menu</Typography>
               <Typography className="step-copy">Browse meal choices, ingredients, and nutrition details.</Typography>
+              <Typography className="step-cta-hint">View menu ↓</Typography>
             </motion.div>
           </Box>
           <Box className="step-position step-choose">
             <motion.div
-              className="step-card"
+              className="step-card step-card-clickable"
               variants={{
                 hidden: { opacity: 0, x: isMobileLayout ? -130 : 130 },
                 visible: { opacity: 1, x: 0, transition: { duration: 1.4, delay: 0.38, ease: [0.16, 1, 0.3, 1] } },
               }}
+              onClick={() => document.getElementById("diet-plans")?.scrollIntoView({ behavior: "smooth" })}
+              style={{ cursor: "pointer" }}
             >
               <Typography className="step-number">02</Typography>
               <Typography className="step-title">Choose your dish</Typography>
               <Typography className="step-copy">Pick the meal that suits your taste and everyday routine.</Typography>
+              <Typography className="step-cta-hint">See diet plans ↓</Typography>
             </motion.div>
           </Box>
           <motion.div
@@ -983,15 +989,18 @@ const Dashboard = () => {
           </Box>
           <Box className="step-position step-questionnaire">
             <motion.div
-              className="step-card"
+              className="step-card step-card-clickable"
               variants={{
                 hidden: { opacity: 0, x: isMobileLayout ? 130 : -130 },
                 visible: { opacity: 1, x: 0, transition: { duration: 1.4, delay: 0.38, ease: [0.16, 1, 0.3, 1] } },
               }}
+              onClick={() => navigate("/questionnaire")}
+              style={{ cursor: "pointer" }}
             >
               <Typography className="step-number">03</Typography>
               <Typography className="step-title">Fill out the questionnaire form</Typography>
               <Typography className="step-copy">Share your goals and food preferences so we can understand what works for you.</Typography>
+              <Typography className="step-cta-hint">Start form →</Typography>
             </motion.div>
           </Box>
         </Box>
