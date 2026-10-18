@@ -2478,37 +2478,49 @@ input {
 
 
   .dashboard-header {
-    flex-direction: column;
-
-    align-items: flex-start;
-
-    gap: 20px;
-
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
     margin-bottom: 0;
+    padding: 8px 4px;
   }
 
-
-  .dashboard-header-shell {
-    width: calc(100% - 36px);
-
-    padding: 0 8px;
+  /* brand stays left, takes available space */
+  .dashboard-header > div:first-child {
+    flex: 1 1 auto;
+    min-width: 0;
   }
 
+  /* hide the subtitle on mobile to save space */
+  .dashboard-header .subtitle {
+    display: none;
+  }
 
+  /* auth/user section: sits right of brand on same row */
   .dashboard-header > div:last-child {
-    width: 100%;
-
-    justify-content: space-between;
+    flex: 0 0 auto;
+    width: auto;
+    justify-content: flex-end;
+    gap: 6px;
   }
-
 
   .dashboard-header > div:last-child > div {
-    text-align: left;
+    text-align: right;
   }
 
-
   .dashboard-header > div:last-child > div p {
-    text-align: left !important;
+    text-align: right !important;
+  }
+
+  /* nav links: full-width second row */
+  .dashboard-nav {
+    order: 3;
+    width: 100%;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    gap: 0;
+    margin-top: 0;
   }
 
 
@@ -3860,13 +3872,42 @@ input {
 @media (max-width: 750px) {
   .dashboard-nav {
     width: 100%;
-    flex-wrap: wrap;
-    margin-top: -10px;
+    flex-wrap: nowrap;
+    margin-top: 0;
   }
 
   .dashboard-nav .MuiButton-root {
     padding-inline: 8px;
     font-size: 10px;
+    min-width: 0;
+  }
+
+  /* compact Sign In and Register on mobile */
+  .logout-btn {
+    padding: 6px 10px !important;
+    font-size: 11px !important;
+    min-width: 0 !important;
+  }
+
+  /* hide icon on Sign In / Logout to save space */
+  .logout-btn .MuiButton-startIcon {
+    display: none;
+  }
+
+  /* tighten Register pill */
+  .dashboard-header > div:last-child .MuiButton-contained {
+    padding: 7px 12px !important;
+    font-size: 11px !important;
+    box-shadow: 2px 2px 0 #e58d9c !important;
+  }
+
+  /* shrink brand icon slightly */
+  .dashboard-header svg:first-of-type {
+    font-size: 24px !important;
+  }
+
+  .dashboard-header p[class*="MuiTypography"] {
+    font-size: 17px !important;
   }
 
   .benefit-strip {
