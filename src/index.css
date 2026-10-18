@@ -2712,43 +2712,122 @@ input {
 
 /* =========================================================
    PEOPLE BEHIND YOUR PLATE
-   Both profiles shown side by side, interactive on hover
+   Diagonal staggered composition matching the wireframe:
+   Shalini sits top-right with her photo hanging over the
+   card's top-right corner; Wahid is tucked underneath on
+   the bottom-left with his photo on the card's left edge
    ========================================================= */
 
 .people-grid {
-  display: grid;
+  display: block;
 
-  grid-template-columns:
-    repeat(2, 1fr);
+  max-width: 480px;
 
-  gap: 26px;
+  margin: 70px auto 0;
 }
 
 
 .person-card {
+  position: relative;
+
   display: flex;
 
   flex-direction: column;
 
   align-items: center;
 
-  gap: 16px;
+  gap: 28px;
 
-  padding: 26px 22px 22px;
+  width: fit-content;
 
-  background: #ffffff;
+  padding: 0;
 
-  border: 2px solid #12284a;
+  background: transparent;
 
-  border-radius: 24px;
+  border: none;
 
-  transition:
-    box-shadow 0.3s ease;
+  z-index: 1;
 }
 
 
-.person-card:hover {
-  box-shadow: 8px 8px 0 #e7b5bc;
+/* SHALINI — photo top-left, name + bio
+   floating to its right, resting just
+   above the top edge of Wahid's photo */
+
+.person-card:nth-child(1) {
+  flex-direction: row;
+
+  align-items: flex-start;
+
+  z-index: 2;
+}
+
+
+.person-card:nth-child(1) .person-image {
+  width: 250px;
+
+  height: 250px;
+
+  flex-shrink: 0;
+
+  margin: 0;
+}
+
+
+.person-card:nth-child(1) .person-details {
+  width: 190px;
+
+  flex-shrink: 0;
+
+  align-items: flex-start;
+
+  text-align: left;
+
+  margin-top: 50px;
+
+  padding: 0;
+}
+
+
+/* WAHID — tucked up under Shalini's
+   photo (corners slightly overlapping),
+   name + bio below Shalini's photo on
+   the left, his photo on the right */
+
+.person-card:nth-child(2) {
+  flex-direction: row-reverse;
+
+  align-items: flex-start;
+
+  margin-top: -45px;
+
+  margin-left: auto;
+}
+
+
+.person-card:nth-child(2) .person-image {
+  width: 250px;
+
+  height: 250px;
+
+  flex-shrink: 0;
+
+  margin: 0;
+}
+
+
+.person-card:nth-child(2) .person-details {
+  width: 190px;
+
+  flex-shrink: 0;
+
+  align-items: flex-start;
+
+  text-align: left;
+
+  margin-top: 90px;
+
+  padding: 0;
 }
 
 
@@ -2843,12 +2922,103 @@ input {
 }
 
 
+/* MOBILE — same diagonal composition,
+   scaled down to fit narrow screens */
+
 @media (max-width: 750px) {
 
   .people-grid {
-    grid-template-columns: 1fr;
+    max-width: 300px;
 
-    gap: 18px;
+    margin-top: 40px;
+  }
+
+
+  .person-card:nth-child(1) {
+    flex-direction: row;
+
+    align-items: flex-start;
+
+    gap: 12px;
+
+    margin: 0;
+  }
+
+
+  .person-card:nth-child(1) .person-image {
+    width: 160px;
+
+    height: 160px;
+
+    flex-shrink: 0;
+
+    margin: 0;
+  }
+
+
+  .person-card:nth-child(1) .person-details {
+    width: 126px;
+
+    flex-shrink: 0;
+
+    align-items: flex-start;
+
+    text-align: left;
+
+    margin-top: 14px;
+
+    padding: 0;
+  }
+
+
+  .person-card:nth-child(2) {
+    flex-direction: row-reverse;
+
+    align-items: flex-start;
+
+    gap: 12px;
+
+    margin-top: -27px;
+
+    margin-left: auto;
+  }
+
+
+  .person-card:nth-child(2) .person-image {
+    width: 160px;
+
+    height: 160px;
+
+    flex-shrink: 0;
+
+    margin: 0;
+  }
+
+
+  .person-card:nth-child(2) .person-details {
+    width: 126px;
+
+    flex-shrink: 0;
+
+    align-items: flex-start;
+
+    text-align: left;
+
+    margin-top: 42px;
+
+    padding: 0;
+  }
+
+
+  .person-card:nth-child(1) .person-name,
+  .person-card:nth-child(2) .person-name {
+    font-size: 15px !important;
+  }
+
+
+  .person-card:nth-child(1) .person-bio,
+  .person-card:nth-child(2) .person-bio {
+    font-size: 12px !important;
   }
 
 }

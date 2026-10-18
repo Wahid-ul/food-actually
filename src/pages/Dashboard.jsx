@@ -80,19 +80,23 @@ const Dashboard = () => {
   const profiles = [
     {
       name: "Shalini Goswami",
-      role: "Dietitian & Nutritionist",
+
       bio:
-        "Shalini Goswami is a wellness-focused dietitian helping people build healthier, more balanced routines through personalized nutrition guidance, sustainable eating habits, and science-backed lifestyle support.",
+        "Creates healthy new recipes and prepares your plates.",
+
       image: DietitianProfile,
+
       href: "https://shalinigoswami.netlify.app/",
     },
 
     {
-      name: userName,
-      role: "Product & Technical Support",
+      name: "Wahidul Alam",
+
       bio:
-        "Contributes to Food, Actually by building the website and developing software tools that power this platform. Focused on creating seamless, user-friendly experiences that make healthy eating accessible and enjoyable for everyone.",
+        "Management of delivery and execution.",
+
       image: WahidProfile,
+
       href: null,
     },
   ];
@@ -2206,36 +2210,9 @@ const Dashboard = () => {
         </Typography>
 
 
-        <Card
-          sx={{
-            maxWidth: "1280px",
-            margin: "0 auto",
+        {/* PEOPLE GRID — DIAGONAL STAGGER: SHALINI TOP-RIGHT, WAHID BOTTOM-LEFT */}
 
-            borderRadius: "28px",
-
-            background: "#fffaf3",
-
-            border:
-              "1.5px solid #12284a",
-
-            boxShadow:
-              "7px 7px 0 #e7b5bc",
-          }}
-        >
-
-          <CardContent
-            sx={{
-              padding: "22px",
-
-              "@media (max-width: 700px)": {
-                padding: "16px",
-              },
-            }}
-          >
-
-            {/* PEOPLE GRID — BOTH PROFILES SIDE BY SIDE */}
-
-            <Box className="people-grid">
+        <Box className="people-grid">
 
               {profiles.map(
                 (profile, index) => (
@@ -2329,13 +2306,6 @@ const Dashboard = () => {
                       </Typography>
 
 
-                      <Typography className="person-role">
-
-                        {profile.role}
-
-                      </Typography>
-
-
                       <Typography className="person-bio">
 
                         {profile.bio}
@@ -2370,12 +2340,7 @@ const Dashboard = () => {
                 )
               )}
 
-            </Box>
-
-
-          </CardContent>
-
-        </Card>
+        </Box>
 
       </motion.div>
 
