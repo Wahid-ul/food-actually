@@ -34,6 +34,7 @@ import MilletBowlImage from "../assets/menu/millet-protein-bowl.png";
 import EggBowlImage from "../assets/menu/egg-protein-bowl.png";
 import ChickpeaBowlImage from "../assets/menu/chickpea-power-bowl.png";
 import PaymentModal from "../components/PaymentModal";
+import FeedbackModal from "../components/FeedbackModal";
 import Navbar from "../pages/Navbar";
 
 const Dashboard = () => {
@@ -52,6 +53,7 @@ const Dashboard = () => {
     "Wahid";
 
   const [paymentModalOpen, setPaymentModalOpen] = useState(false);
+  const [feedbackOpen, setFeedbackOpen] = useState(false);
 
   const [heroSlide, setHeroSlide] = useState(0);
   const isMobileLayout = useMediaQuery("(max-width: 750px)");
@@ -1540,147 +1542,47 @@ const Dashboard = () => {
 
       <Box className="mood-section">
 
-        <Box className="mood-header">
-
+        <motion.div
+          className="mood-header"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.4 }}
+          transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+        >
           <Typography className="mood-title">
             Eating well looks different for everyone
           </Typography>
-
           <Typography className="mood-description">
             Start with the way you live, then explore meals that fit your day.
           </Typography>
-
-        </Box>
-
+        </motion.div>
 
         <Box className="mood-grid">
 
-          {/* Protein */}
-
-          <Box
-            className="mood-card mood-protein"
-            onClick={() => {
-              document
-                .querySelector(".menu-scroll")
-                ?.scrollIntoView({
-                  behavior: "smooth",
-                });
-            }}
-          >
-
-            <Box className="mood-icon">
-              💪
-            </Box>
-
-            <Typography className="mood-card-title">
-              For active days
-            </Typography>
-
-            <Typography className="mood-card-text">
-              Wholesome meals with satisfying protein to complement your training routine.
-            </Typography>
-
-            <Typography className="mood-arrow">
-              Explore the menu →
-            </Typography>
-
-          </Box>
-
-
-          {/* Energy */}
-
-          <Box
-            className="mood-card mood-energy"
-            onClick={() => {
-              document
-                .querySelector(".menu-scroll")
-                ?.scrollIntoView({
-                  behavior: "smooth",
-                });
-            }}
-          >
-
-            <Box className="mood-icon">
-              ⚡
-            </Box>
-
-            <Typography className="mood-card-title">
-              For busy workdays
-            </Typography>
-
-            <Typography className="mood-card-text">
-              Convenient lunch options that help make the midday break count.
-            </Typography>
-
-            <Typography className="mood-arrow">
-              Explore the menu →
-            </Typography>
-
-          </Box>
-
-
-          {/* Light */}
-
-          <Box
-            className="mood-card mood-light"
-            onClick={() => {
-              document
-                .querySelector(".menu-scroll")
-                ?.scrollIntoView({
-                  behavior: "smooth",
-                });
-            }}
-          >
-
-            <Box className="mood-icon">
-              🥗
-            </Box>
-
-            <Typography className="mood-card-title">
-              For everyday balance
-            </Typography>
-
-            <Typography className="mood-card-text">
-              Bring more variety to your routine with colourful, feel-good ingredients.
-            </Typography>
-
-            <Typography className="mood-arrow">
-              Explore the menu →
-            </Typography>
-
-          </Box>
-
-
-          {/* Delicious */}
-
-          <Box
-            className="mood-card mood-delicious"
-            onClick={() => {
-              document
-                .querySelector(".menu-scroll")
-                ?.scrollIntoView({
-                  behavior: "smooth",
-                });
-            }}
-          >
-
-            <Box className="mood-icon">
-              😋
-            </Box>
-
-            <Typography className="mood-card-title">
-              For sharing at home
-            </Typography>
-
-            <Typography className="mood-card-text">
-              Easy meal choices for couples, families and anyone short on prep time.
-            </Typography>
-
-            <Typography className="mood-arrow">
-              Explore the menu →
-            </Typography>
-
-          </Box>
+          {[
+            { cls: "mood-protein", emoji: "💪", title: "For active days",       text: "Wholesome meals with satisfying protein to complement your training routine." },
+            { cls: "mood-energy",  emoji: "⚡", title: "For busy workdays",     text: "Convenient lunch options that help make the midday break count." },
+            { cls: "mood-light",   emoji: "🥗", title: "For everyday balance",  text: "Bring more variety to your routine with colourful, feel-good ingredients." },
+            { cls: "mood-delicious",emoji: "😋",title: "For sharing at home",   text: "Easy meal choices for couples, families and anyone short on prep time." },
+          ].map((card, index) => (
+            <motion.div
+              key={card.cls}
+              initial={{ opacity: 0, y: 36 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.5, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
+              whileHover={{ y: -7, scale: 1.03 }}
+              style={{ cursor: "pointer" }}
+              onClick={() => document.querySelector(".menu-scroll")?.scrollIntoView({ behavior: "smooth" })}
+            >
+              <Box className={`mood-card ${card.cls}`}>
+                <Box className="mood-icon">{card.emoji}</Box>
+                <Typography className="mood-card-title">{card.title}</Typography>
+                <Typography className="mood-card-text">{card.text}</Typography>
+                <Typography className="mood-arrow">Explore the menu →</Typography>
+              </Box>
+            </motion.div>
+          ))}
 
         </Box>
 
@@ -2153,17 +2055,46 @@ const Dashboard = () => {
                 </svg>
                 Email us
               </Typography>
-              <Typography className="footer-link" onClick={() => document.querySelector(".questionnaire-page, #how-it-works")?.scrollIntoView({ behavior: "smooth" })} component="span"
+              <Typography className="footer-link" component="span"
                 onClick={() => { window.location.href = "/questionnaire"; }}
               >
                 Get in touch
               </Typography>
+              <Typography className="footer-link" component="span"
+                onClick={() => setFeedbackOpen(true)}
+              >
+                Leave feedback
+              </Typography>
+            </Box>
+          </Box>
+
+          {/* ── Blog column ── */}
+          <Box className="footer-col">
+            <Typography className="footer-col-heading">Blog</Typography>
+            <Box className="footer-links">
+              <Typography className="footer-link" component="span" onClick={() => navigate("/blog")}>All articles</Typography>
+              <Typography className="footer-link" component="span" onClick={() => navigate("/blog")}>Nutrition tips</Typography>
+              <Typography className="footer-link" component="span" onClick={() => navigate("/blog")}>Meal planning</Typography>
+              <Typography className="footer-link" component="span" onClick={() => navigate("/blog")}>Wellness</Typography>
             </Box>
           </Box>
 
         </Box>
       </motion.div>
 
+
+      {/* =====================================================
+          FEEDBACK MODAL
+      ===================================================== */}
+
+      <FeedbackModal
+        open={feedbackOpen}
+        onClose={() => setFeedbackOpen(false)}
+        userName={userName}
+        saladsPurchased={saladsPurchased}
+        points={points}
+        lastMeal={selectedSalad?.name}
+      />
 
       {/* =====================================================
           PAYMENT MODAL

@@ -108,6 +108,7 @@ const Navbar = ({
         <Button onClick={() => navigate("/")}>Home</Button>
         <Button onClick={() => navigate("/plans")}>Plans</Button>
         <Button onClick={() => document.querySelector(".how-it-works")?.scrollIntoView({ behavior: "smooth" })}>About</Button>
+        <Button onClick={() => navigate("/blog")}>Blog</Button>
       </Box>
 
 

@@ -4,6 +4,7 @@ import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import Questionnaire from './pages/Questionnaire';
 import Plans from './pages/Plans';
+import Blog from './pages/Blog';
 
 export default function App() {
   return (
@@ -14,6 +15,7 @@ export default function App() {
       <Route path="/register" element={<Register />} />
       <Route path="/questionnaire" element={<Questionnaire />} />
       <Route path="/plans" element={<Plans />} />
+      <Route path="/blog" element={<Blog />} />
     </Routes>
   );
 }
