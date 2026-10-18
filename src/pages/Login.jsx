@@ -7,41 +7,27 @@ import {
   Button,
   Stack,
   Alert,
+  Link,
 } from '@mui/material';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { sendPhoneOtp, verifyPhoneOtp } from '../utils/auth';
+import { loginWithEmail } from '../utils/auth';
 
 export default function Login() {
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [otp, setOtp] = useState('');
-  const [otpSent, setOtpSent] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
-
-  const handleSendOtp = async () => {
-    try {
-      setLoading(true);
-      setError('');
-      await sendPhoneOtp(phoneNumber);
-      setOtpSent(true);
-      alert('OTP sent to your mobile number.');
-    } catch (err) {
-      setError(err.message || 'Unable to send OTP.');
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleLogin = async () => {
     try {
       setLoading(true);
       setError('');
-      await verifyPhoneOtp(otp);
+      await loginWithEmail(email, password);
       navigate('/dashboard');
     } catch (err) {
-      setError(err.message || 'Invalid OTP. Please try again.');
+      setError(err.message || 'Login failed. Please try again.');
     } finally {
       setLoading(false);
     }

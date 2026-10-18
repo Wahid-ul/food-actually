@@ -36,9 +36,9 @@ input {
 
   min-height: 100vh;
 
-  overflow: hidden;
+  overflow: clip;
 
-  padding: 35px 6% 70px;
+  padding: 0 6% 70px;
 
   background:
     radial-gradient(
@@ -109,6 +109,38 @@ input {
    HEADER
    ========================================================= */
 
+.dashboard-header-shell {
+  position: fixed;
+
+  top: 20px;
+
+  left: 0;
+
+  right: 0;
+
+  z-index: 30;
+
+  width: min(86%, 1120px);
+
+  margin: 0 auto;
+
+  padding: 0 12px;
+
+  border-radius: 18px;
+
+  border: 1px solid rgba(18, 40, 74, 0.55);
+
+  background: rgba(248, 244, 236, 0.3);
+
+  backdrop-filter: blur(12px);
+
+  -webkit-backdrop-filter: blur(12px);
+
+  box-shadow:
+    0 2px 0 rgba(18, 40, 74, 0.28),
+    0 8px 20px rgba(18, 40, 74, 0.16);
+}
+
 .dashboard-header {
   position: relative;
 
@@ -116,7 +148,9 @@ input {
 
   max-width: 1280px;
 
-  margin: 0 auto 50px;
+  margin: 0 auto;
+
+  padding: 12px 16px;
 
   display: flex;
 
@@ -129,12 +163,20 @@ input {
    OPENING SALE BANNER
    ========================================================= */
 
+/* =========================================================
+   OPENING SALE — HERO SECTION
+   ========================================================= */
+
 .opening-sale {
   position: relative;
 
   z-index: 2;
 
   max-width: 1280px;
+
+  height: 100vh;
+
+  height: 100svh;
 
   margin: 0 auto 35px;
 
@@ -149,10 +191,69 @@ input {
   box-shadow: 7px 7px 0 #12284a;
 
   color: #12284a;
+
+  display: flex;
+
+  align-items: stretch;
+
+  transition: background-color 0.45s ease;
+}
+
+.opening-sale.opening-sale-pink {
+  background-color: #e8a0ac;
+}
+
+.opening-sale.opening-sale-blue {
+  background-color: #c9dced;
+}
+
+.opening-sale.opening-sale-sage {
+  background-color: #dce8d5;
+}
+
+.opening-sale.opening-sale-blue::before {
+  background: #e8f0f6;
+}
+
+.opening-sale.opening-sale-blue::after {
+  background: #e8a0ac;
+}
+
+.opening-sale.opening-sale-sage::before {
+  background: #f5e9c9;
+}
+
+.opening-sale.opening-sale-sage::after {
+  background: #c9dced;
 }
 
 
+/* Decorative circle top-right */
+
 .opening-sale::before {
+  content: "";
+
+  position: absolute;
+
+  width: 300px;
+  height: 300px;
+
+  right: -100px;
+  top: -120px;
+
+  border-radius: 50%;
+
+  background: #f5d8dc;
+
+  opacity: 0.7;
+
+  z-index: 0;
+}
+
+
+/* Decorative circle bottom-left */
+
+.opening-sale::after {
   content: "";
 
   position: absolute;
@@ -160,88 +261,95 @@ input {
   width: 180px;
   height: 180px;
 
-  right: -40px;
-  top: -70px;
-
-  border-radius: 50%;
-
-  background: #f5d8dc;
-
-  opacity: 0.7;
-}
-
-
-.opening-sale::after {
-  content: "";
-
-  position: absolute;
-
-  width: 100px;
-  height: 100px;
-
-  left: -30px;
-  bottom: -45px;
+  left: -80px;
+  bottom: -90px;
 
   border-radius: 50%;
 
   background: #c9dced;
 
   opacity: 0.8;
+
+  z-index: 0;
 }
 
 
-.opening-sale-content {
+/* =========================================================
+   HERO SLIDE
+   ========================================================= */
+
+.opening-sale-slide {
   position: relative;
 
   z-index: 2;
 
-  padding: 18px 24px;
+  width: 100%;
 
-  text-align: center;
+  height: 100%;
+
+  min-height: 0;
+
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  align-items: center;
 }
 
 
-.opening-sale-small {
-  font-size: 13px !important;
+/* =========================================================
+   LEFT CONTENT
+   ========================================================= */
 
-  font-weight: 700 !important;
+.opening-sale-content {
+  position: relative;
+
+  z-index: 3;
+
+  height: 100%;
+
+  min-height: 0;
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+
+  align-items: flex-start;
+
+  padding: clamp(90px, 12svh, 130px) 45px 42px;
+
+  text-align: left;
+}
+
+
+/* Small heading */
+
+.opening-sale-small {
+  font-size: 14px !important;
+
+  font-weight: 800 !important;
 
   letter-spacing: 2px;
 
   text-transform: uppercase;
 
-  margin-bottom: 5px !important;
-}
-
-
-.opening-sale-title {
-  font-family: "Manrope", sans-serif !important;
-
-  font-size: clamp(
-    26px,
-    4vw,
-    48px
-  ) !important;
-
-  line-height: 1 !important;
-
-  font-weight: 800 !important;
-
-  letter-spacing: -2px;
-
-  margin: 4px 0 !important;
+  margin-bottom: 12px !important;
 
   color: #12284a !important;
 }
 
 
-.opening-sale-discount {
+/* Main heading */
+
+.opening-sale-title {
   font-family: "Manrope", sans-serif !important;
 
   font-size: clamp(
-    32px,
-    6vw,
-    64px
+    40px,
+    5vw,
+    72px
   ) !important;
 
   line-height: 0.95 !important;
@@ -250,31 +358,60 @@ input {
 
   letter-spacing: -3px;
 
-  color: #fffaf3 !important;
-
-  text-shadow: 3px 3px 0 #12284a;
-
-  margin: 8px 0 !important;
-}
-
-
-.opening-sale-subtitle {
-  font-family: "Manrope", sans-serif !important;
-
-  font-size: 16px !important;
-
-  font-weight: 800 !important;
-
-  letter-spacing: 1px;
+  margin: 4px 0 12px !important;
 
   color: #12284a !important;
 }
 
 
-.opening-sale-description {
-  margin-top: 8px !important;
+/* Discount */
 
-  font-size: 12px !important;
+.opening-sale-discount {
+  font-family: "Manrope", sans-serif !important;
+
+  font-size: clamp(
+    48px,
+    6vw,
+    82px
+  ) !important;
+
+  line-height: 0.9 !important;
+
+  font-weight: 800 !important;
+
+  letter-spacing: -4px;
+
+  color: #fffaf3 !important;
+
+  text-shadow: 4px 4px 0 #12284a;
+
+  margin: 10px 0 !important;
+}
+
+
+/* Subtitle */
+
+.opening-sale-subtitle {
+  font-family: "Manrope", sans-serif !important;
+
+  font-size: 18px !important;
+
+  font-weight: 800 !important;
+
+  letter-spacing: 1.5px;
+
+  color: #12284a !important;
+
+  margin-top: 4px !important;
+}
+
+
+/* Description */
+
+.opening-sale-description {
+  margin-top: 12px !important;
+
+  font-size: 14px !important;
 
   color: #394b63 !important;
 
@@ -282,31 +419,232 @@ input {
 }
 
 
-@media (max-width: 600px) {
+/* Offer/code box */
 
-  .opening-sale {
-    margin-bottom: 28px;
+.opening-sale-code {
+  margin-top: 22px;
 
-    border-radius: 24px;
+  padding: 10px 18px;
 
-    box-shadow: 5px 5px 0 #12284a;
-  }
+  border-radius: 12px;
 
-  .opening-sale-content {
-    padding: 25px 20px;
-  }
+  border: 1.5px solid #12284a;
 
-  .opening-sale-title {
-    font-size: 34px !important;
-  }
+  background: #fffaf3;
 
-  .opening-sale-discount {
-    font-size: 55px !important;
-  }
+  color: #12284a;
 
-  .opening-sale-subtitle {
-    font-size: 16px !important;
-  }
+  font-size: 13px;
+
+  font-weight: 700;
+
+  letter-spacing: 1px;
+
+  box-shadow: 3px 3px 0 #12284a;
+}
+
+
+/* Terms */
+
+.opening-sale-terms {
+  margin-top: 14px !important;
+
+  max-width: 420px;
+
+  font-size: 11px !important;
+
+  line-height: 1.5 !important;
+
+  color: #4e5969 !important;
+}
+
+.opening-sale-plan-kicker {
+  color: #8b3f50 !important;
+  font-size: 12px !important;
+  letter-spacing: 2.4px;
+}
+
+.opening-sale-plan-title {
+  font-size: clamp(42px, 4.5vw, 64px) !important;
+  line-height: 0.98 !important;
+  letter-spacing: 0;
+  margin-bottom: 8px !important;
+}
+
+.opening-sale-plan-highlight {
+  font-size: clamp(34px, 3.7vw, 52px) !important;
+  line-height: 1 !important;
+  letter-spacing: 0;
+  margin: 8px 0 !important;
+}
+
+.opening-sale-plan-subtitle {
+  margin-top: 2px !important;
+  font-size: 14px !important;
+  letter-spacing: 1.4px;
+}
+
+.opening-sale-plan-description {
+  max-width: 430px;
+  font-size: 15px !important;
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: 0;
+}
+
+.opening-sale-plan-callout {
+  font-size: 11px;
+  letter-spacing: 0.8px;
+}
+
+
+/* =========================================================
+   RIGHT IMAGE
+   ========================================================= */
+
+.opening-sale-image {
+  position: relative;
+
+  z-index: 2;
+
+  width: 100%;
+
+  height: 100%;
+
+  min-height: 0;
+
+  padding: clamp(90px, 12svh, 130px) 28px 28px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+}
+
+
+/* Image */
+
+.opening-sale-image img {
+  width: 100%;
+
+  height: clamp(300px, 58svh, 560px);
+
+  object-fit: cover;
+
+  display: block;
+
+  border-radius: 28px;
+
+  border: 2px solid #12284a;
+
+  box-shadow: 8px 8px 0 #12284a;
+
+  transform: rotate(2deg);
+
+  transition: transform 0.4s ease;
+}
+
+
+.opening-sale-image img:hover {
+  transform: rotate(0deg) scale(1.02);
+}
+
+
+/* =========================================================
+   SLIDE DOTS
+   ========================================================= */
+
+.opening-sale-dots {
+  position: absolute;
+
+  z-index: 10;
+
+  left: 45px;
+
+  bottom: 22px;
+
+  display: flex;
+
+  gap: 8px;
+}
+
+
+.opening-sale-dot {
+  width: 9px;
+
+  height: 9px;
+
+  border-radius: 50%;
+
+  background: #fffaf3;
+
+  border: 1.5px solid #12284a;
+
+  cursor: pointer;
+
+  transition: all 0.25s ease;
+}
+
+
+.opening-sale-dot.active {
+  width: 28px;
+
+  border-radius: 10px;
+
+  background: #12284a;
+}
+
+
+/* =========================================================
+   SLIDE ARROWS
+   ========================================================= */
+
+.opening-sale-prev,
+.opening-sale-next {
+  position: absolute !important;
+
+  z-index: 10 !important;
+
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  min-width: 42px !important;
+
+  width: 42px;
+
+  height: 42px;
+
+  padding: 0 !important;
+
+  border-radius: 50% !important;
+
+  border: 1.5px solid #12284a !important;
+
+  background: #fffaf3 !important;
+
+  color: #12284a !important;
+
+  box-shadow: 3px 3px 0 #12284a !important;
+}
+
+
+.opening-sale-prev {
+  left: 18px;
+}
+
+
+.opening-sale-next {
+  right: 18px;
+}
+
+
+.opening-sale-prev:hover,
+.opening-sale-next:hover {
+  background: #12284a !important;
+
+  color: #fffaf3 !important;
 }
 /* Logo */
 
@@ -730,6 +1068,68 @@ input {
 
 
 /* =========================================================
+   PHOTO MENU CARDS
+   Dish image as the card background with the full
+   write-up overlaid on top of the picture
+   ========================================================= */
+
+.salad-card-photo {
+  display: flex !important;
+
+  flex-direction: column !important;
+
+  justify-content: flex-end !important;
+
+  min-height: min(58vh, 430px) !important;
+
+  background: #12284a !important;
+}
+
+
+/* Hide the decorative corner circle on photo cards */
+
+.salad-card-photo::after {
+  display: none;
+}
+
+
+/* Light text colors so the write-up stays readable over photos */
+
+.salad-card-photo .salad-title {
+  color: #ffffff !important;
+
+  text-shadow: 0 2px 20px rgba(18, 40, 74, 0.6);
+}
+
+
+.salad-card-photo .salad-description {
+  color: #e9eef6 !important;
+}
+
+
+.salad-card-photo .calories {
+  color: #ffffff !important;
+}
+
+
+.salad-card-photo .micronutrients {
+  color: #d8e0ec !important;
+}
+
+
+.salad-card-photo .price-label {
+  color: #c6d0e0 !important;
+}
+
+
+.salad-card-photo .price {
+  color: #ffffff !important;
+
+  text-shadow: 0 2px 16px rgba(18, 40, 74, 0.6);
+}
+
+
+/* =========================================================
    RIGHT REWARD COLUMN
    ========================================================= */
 
@@ -1074,7 +1474,663 @@ input {
   box-shadow: 7px 7px 0 #b7c9d9 !important;
 }
 
+/* =========================================================
+   WHAT'S TRENDING
+========================================================= */
 
+.trending-section {
+  position: relative;
+
+  z-index: 1;
+
+  max-width: 1280px;
+
+  margin: 0 auto;
+
+  padding: 24px;
+
+  border-radius: 28px;
+
+  background: #fffaf3;
+
+  border: 1.5px solid #12284a;
+
+  box-shadow: 7px 7px 0 #e7b5bc;
+
+  overflow: hidden;
+}
+
+
+/* Header */
+
+.trending-header {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 20px;
+
+  margin-bottom: 22px;
+}
+
+
+.trending-title {
+  font-family: "Manrope", sans-serif !important;
+
+  font-size: 26px !important;
+
+  font-weight: 800 !important;
+
+  letter-spacing: -1px;
+
+  color: #12284a !important;
+}
+
+
+.trending-description {
+  margin-top: 5px !important;
+
+  color: #667181 !important;
+
+  font-size: 13px !important;
+}
+
+
+.trending-chip {
+  background: #f5e1a9 !important;
+
+  color: #12284a !important;
+
+  border: 1.5px solid #12284a !important;
+
+  font-size: 10px !important;
+
+  font-weight: 800 !important;
+
+  letter-spacing: 0.8px;
+}
+
+
+/* Trending grid */
+
+.trending-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap: 16px;
+}
+
+
+/* Card */
+
+.trending-card {
+  overflow: hidden;
+
+  border-radius: 22px !important;
+
+  background: #fffaf3 !important;
+
+  border: 1.5px solid #12284a !important;
+
+  box-shadow: 4px 4px 0 #c9dced !important;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease !important;
+}
+
+
+.trending-card:hover {
+  transform: translateY(-5px);
+
+  box-shadow: 7px 7px 0 #e8a0ac !important;
+}
+
+
+/* Image */
+
+.trending-image-wrapper {
+  position: relative;
+
+  height: 190px;
+
+  overflow: hidden;
+}
+
+
+.trending-image {
+  width: 100%;
+
+  height: 100%;
+
+  object-fit: cover;
+
+  display: block;
+
+  transition: transform 0.4s ease;
+}
+
+
+.trending-card:hover .trending-image {
+  transform: scale(1.05);
+}
+
+
+/* Badge */
+
+.trending-badge {
+  position: absolute !important;
+
+  left: 12px;
+
+  top: 12px;
+
+  background: #fffaf3 !important;
+
+  color: #12284a !important;
+
+  border: 1.5px solid #12284a !important;
+
+  font-size: 9px !important;
+
+  font-weight: 800 !important;
+}
+
+
+/* Content */
+
+.trending-card-content {
+  padding: 18px !important;
+}
+
+
+.trending-meal-title {
+  font-family: "Manrope", sans-serif !important;
+
+  font-size: 18px !important;
+
+  font-weight: 800 !important;
+
+  color: #12284a !important;
+}
+
+
+.trending-meal-description {
+  margin-top: 6px !important;
+
+  min-height: 38px;
+
+  color: #667181 !important;
+
+  font-size: 11px !important;
+
+  line-height: 1.5 !important;
+}
+
+
+.trending-meal-info {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  margin-top: 15px;
+
+  color: #596474;
+
+  font-size: 11px;
+
+  font-weight: 700;
+}
+
+
+.trending-meal-info p:last-child {
+  font-family: "DM Sans", sans-serif;
+
+  font-size: 11px;
+
+  color: #596474;
+
+  font-weight: 700;
+}
+
+
+/* Button */
+
+.trending-order-button {
+  width: 100%;
+
+  margin-top: 14px !important;
+
+  padding: 9px 15px !important;
+
+  border-radius: 25px !important;
+
+  background: #12284a !important;
+
+  color: #fffaf3 !important;
+
+  text-transform: none !important;
+
+  font-size: 11px !important;
+
+  font-weight: 700 !important;
+
+  box-shadow: 3px 3px 0 #e58d9c !important;
+}
+
+
+.trending-order-button:hover {
+  background: #e58d9c !important;
+
+  color: #12284a !important;
+}
+
+
+/* =========================================================
+   PICK YOUR MOOD
+========================================================= */
+
+.mood-section {
+  position: relative;
+
+  z-index: 1;
+
+  max-width: 1280px;
+
+  margin: 0 auto;
+
+  padding: 28px;
+
+  border-radius: 28px;
+
+  background: #12284a;
+
+  border: 2px solid #12284a;
+
+  box-shadow: 7px 7px 0 #e8a0ac;
+
+  color: #fffaf3;
+}
+
+
+.mood-header {
+  margin-bottom: 22px;
+}
+
+
+.mood-title {
+  font-family: "Manrope", sans-serif !important;
+
+  font-size: 28px !important;
+
+  font-weight: 800 !important;
+
+  letter-spacing: -1px;
+
+  color: #fffaf3 !important;
+}
+
+
+.mood-description {
+  margin-top: 5px !important;
+
+  color: #c9dced !important;
+
+  font-size: 13px !important;
+}
+
+
+/* Mood grid */
+
+.mood-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, 1fr);
+
+  gap: 12px;
+}
+
+
+/* Mood card */
+
+.mood-card {
+  min-height: 190px;
+
+  padding: 20px;
+
+  border-radius: 22px;
+
+  border: 1.5px solid #fffaf3;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+
+.mood-card:hover {
+  transform: translateY(-6px);
+
+  box-shadow: 5px 5px 0 #e8a0ac;
+}
+
+
+/* Mood backgrounds */
+
+.mood-protein {
+  background: #e8a0ac;
+}
+
+
+.mood-energy {
+  background: #d4aa51;
+}
+
+
+.mood-light {
+  background: #7f9e72;
+}
+
+
+.mood-delicious {
+  background: #7da5c7;
+}
+
+
+/* Mood icon */
+
+.mood-icon {
+  width: 45px;
+
+  height: 45px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #fffaf3;
+
+  border: 1.5px solid #12284a;
+
+  font-size: 21px;
+
+  margin-bottom: 15px;
+}
+
+
+/* Mood title */
+
+.mood-card-title {
+  font-family: "Manrope", sans-serif !important;
+
+  font-size: 16px !important;
+
+  font-weight: 800 !important;
+
+  color: #12284a !important;
+}
+
+
+/* Mood text */
+
+.mood-card-text {
+  margin-top: 7px !important;
+
+  color: #12284a !important;
+
+  font-size: 11px !important;
+
+  line-height: 1.5 !important;
+}
+
+
+/* Arrow */
+
+.mood-arrow {
+  margin-top: 14px !important;
+
+  color: #12284a !important;
+
+  font-size: 10px !important;
+
+  font-weight: 800 !important;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.7px;
+}
+
+
+/* =========================================================
+   LOVED BY OUR CUSTOMERS
+========================================================= */
+
+.reviews-section {
+  position: relative;
+
+  z-index: 1;
+
+  max-width: 1280px;
+
+  margin: 0 auto;
+
+  padding: 25px;
+
+  border-radius: 28px;
+
+  background: #f3d7dc;
+
+  border: 1.5px solid #12284a;
+
+  box-shadow: 7px 7px 0 #c9dced;
+
+  overflow: hidden;
+}
+
+
+/* Reviews header */
+
+.reviews-header {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 20px;
+
+  margin-bottom: 22px;
+}
+
+
+.reviews-title {
+  font-family: "Manrope", sans-serif !important;
+
+  font-size: 27px !important;
+
+  font-weight: 800 !important;
+
+  letter-spacing: -1px;
+
+  color: #12284a !important;
+}
+
+
+.reviews-description {
+  margin-top: 5px !important;
+
+  color: #596474 !important;
+
+  font-size: 13px !important;
+}
+
+
+/* Rating */
+
+.reviews-rating {
+  text-align: right;
+}
+
+
+.reviews-rating-number {
+  font-family: "Manrope", sans-serif !important;
+
+  font-size: 32px !important;
+
+  font-weight: 800 !important;
+
+  color: #12284a !important;
+}
+
+
+.reviews-stars {
+  color: #12284a !important;
+
+  font-size: 15px !important;
+
+  letter-spacing: 2px;
+}
+
+
+.reviews-rating-text {
+  color: #596474 !important;
+
+  font-size: 9px !important;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.8px;
+}
+
+
+/* Review grid */
+
+.reviews-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap: 14px;
+}
+
+
+/* Review card */
+
+.review-card {
+  border-radius: 22px !important;
+
+  background: #fffaf3 !important;
+
+  border: 1.5px solid #12284a !important;
+
+  box-shadow: 4px 4px 0 #12284a !important;
+
+  transition:
+    transform 0.25s ease !important;
+}
+
+
+.review-card:hover {
+  transform: translateY(-5px);
+}
+
+
+/* Stars */
+
+.review-stars {
+  color: #12284a !important;
+
+  font-size: 15px !important;
+
+  letter-spacing: 2px;
+}
+
+
+/* Review text */
+
+.review-text {
+  min-height: 75px;
+
+  margin-top: 14px !important;
+
+  color: #394b63 !important;
+
+  font-size: 13px !important;
+
+  line-height: 1.7 !important;
+}
+
+
+/* Person */
+
+.review-person {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  margin-top: 18px;
+
+  padding-top: 14px;
+
+  border-top: 1px solid #ddd6cb;
+}
+
+
+.review-avatar {
+  width: 36px;
+
+  height: 36px;
+
+  border-radius: 50%;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  background: #e8a0ac;
+
+  border: 1px solid #12284a;
+
+  font-weight: 800;
+
+  color: #12284a;
+}
+
+
+.review-name {
+  font-size: 12px !important;
+
+  font-weight: 800 !important;
+
+  color: #12284a !important;
+}
+
+
+.review-label {
+  margin-top: 2px !important;
+
+  font-size: 9px !important;
+
+  color: #7a8492 !important;
+}
 .macro-grid {
   display: grid;
 
@@ -1209,6 +2265,256 @@ input {
    RESPONSIVE
    ========================================================= */
 
+
+   @media (max-width: 750px) {
+
+  .opening-sale {
+    height: 100vh;
+
+    height: 100svh;
+
+    min-height: 0;
+
+    margin-bottom: 28px;
+
+    border-radius: 24px;
+
+    box-shadow: 5px 5px 0 #12284a;
+  }
+
+
+  .opening-sale-slide {
+    grid-template-columns: 1fr;
+
+    grid-template-rows: minmax(0, 1.65fr) minmax(0, 0.7fr);
+
+    height: 100%;
+
+    min-height: 0;
+  }
+
+
+  .opening-sale-content {
+    min-height: 0;
+
+    padding: clamp(150px, 23svh, 190px) 20px 8px;
+
+    align-items: flex-start;
+
+    text-align: left;
+  }
+
+
+  .opening-sale-title {
+    font-size: clamp(27px, 8vw, 34px) !important;
+
+    line-height: 0.94 !important;
+
+    letter-spacing: -1.5px;
+  }
+
+
+  .opening-sale-discount {
+    font-size: clamp(28px, 8vw, 34px) !important;
+
+    line-height: 0.94 !important;
+
+    letter-spacing: -1.5px;
+  }
+
+
+  .opening-sale-small {
+    margin-bottom: 6px !important;
+
+    font-size: 10px !important;
+
+    letter-spacing: 1.2px;
+  }
+
+
+  .opening-sale-subtitle {
+    margin-top: 0 !important;
+
+    font-size: 13px !important;
+
+    letter-spacing: 1px;
+  }
+
+
+  .opening-sale-description {
+    margin-top: 5px !important;
+
+    font-size: 11px !important;
+
+    letter-spacing: 0.3px;
+  }
+
+
+  .opening-sale-code {
+    margin-top: 10px;
+
+    padding: 7px 10px;
+
+    font-size: 10px;
+
+    letter-spacing: 0.4px;
+  }
+
+
+  .opening-sale-cta {
+    margin-top: 8px !important;
+
+    padding: 7px 13px !important;
+
+    font-size: 11px !important;
+  }
+
+
+  .opening-sale-terms {
+    margin-top: 7px !important;
+
+    font-size: 9px !important;
+
+    line-height: 1.3 !important;
+  }
+
+
+  .opening-sale-plan-kicker {
+    font-size: 9px !important;
+
+    letter-spacing: 1.5px;
+  }
+
+
+  .opening-sale-plan-title {
+    font-size: clamp(25px, 7vw, 32px) !important;
+
+    line-height: 0.98 !important;
+  }
+
+
+  .opening-sale-plan-highlight {
+    font-size: clamp(23px, 6.5vw, 30px) !important;
+
+    letter-spacing: 0;
+  }
+
+
+  .opening-sale-plan-subtitle {
+    font-size: 11px !important;
+
+    letter-spacing: 0.8px;
+  }
+
+
+  .opening-sale-plan-description {
+    font-size: 11px !important;
+
+    line-height: 1.35 !important;
+  }
+
+
+  .opening-sale-plan-callout {
+    font-size: 9px;
+
+    line-height: 1.3;
+
+    letter-spacing: 0.3px;
+  }
+
+
+  .opening-sale-plan-terms {
+    max-width: 320px;
+  }
+
+
+  .opening-sale-image {
+    min-height: 0;
+
+    padding: 10px 24px 24px;
+  }
+
+
+  .opening-sale-image img {
+    height: min(24svh, 195px);
+
+    min-height: 0;
+
+    transform: rotate(0deg);
+  }
+
+
+  .opening-sale-dots {
+    left: 28px;
+
+    bottom: 15px;
+  }
+
+
+  .opening-sale-prev {
+    left: 10px;
+  }
+
+
+  .opening-sale-next {
+    right: 10px;
+  }
+  .trending-header {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+  .trending-grid {
+    display: flex;
+
+    overflow-x: auto;
+
+    scroll-snap-type: x mandatory;
+
+    padding-bottom: 10px;
+  }
+
+  .trending-card {
+    min-width: 280px;
+
+    scroll-snap-align: start;
+  }
+
+  .mood-section {
+    padding: 22px;
+  }
+
+  .mood-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .reviews-header {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+  .reviews-rating {
+    text-align: left;
+  }
+
+  .reviews-grid {
+    display: flex;
+
+    overflow-x: auto;
+
+    scroll-snap-type: x mandatory;
+
+    padding-bottom: 10px;
+  }
+
+  .review-card {
+    min-width: 280px;
+
+    scroll-snap-align: start;
+  }
+}
 @media (max-width: 1000px) {
 
   .dashboard-main {
@@ -1232,8 +2538,7 @@ input {
 @media (max-width: 750px) {
 
   .dashboard {
-    padding:
-      25px 18px 50px;
+    padding: 0 18px 50px;
   }
 
 
@@ -1244,7 +2549,14 @@ input {
 
     gap: 20px;
 
-    margin-bottom: 35px;
+    margin-bottom: 0;
+  }
+
+
+  .dashboard-header-shell {
+    width: calc(100% - 36px);
+
+    padding: 0 8px;
   }
 
 
@@ -1305,6 +2617,53 @@ input {
 
 }
 
+@media (min-width: 751px) and (max-height: 720px) {
+  .opening-sale-content {
+    padding: 72px 36px 24px;
+  }
+
+  .opening-sale-title {
+    font-size: clamp(34px, 3.2vw, 46px) !important;
+    line-height: 0.92 !important;
+    letter-spacing: -2px;
+    margin-bottom: 8px !important;
+  }
+
+  .opening-sale-discount {
+    font-size: clamp(40px, 4vw, 58px) !important;
+    letter-spacing: -2.5px;
+    margin: 6px 0 !important;
+  }
+
+  .opening-sale-small {
+    margin-bottom: 7px !important;
+    font-size: 12px !important;
+  }
+
+  .opening-sale-description {
+    margin-top: 7px !important;
+    font-size: 12px !important;
+  }
+
+  .opening-sale-code {
+    margin-top: 12px;
+    padding: 8px 12px;
+  }
+
+  .opening-sale-cta {
+    margin-top: 10px !important;
+  }
+
+  .opening-sale-terms {
+    margin-top: 8px !important;
+    font-size: 10px !important;
+  }
+
+  .opening-sale-image {
+    padding: 72px 24px 20px;
+  }
+}
+
 
 @media (max-width: 450px) {
 
@@ -1337,4 +2696,751 @@ input {
     align-items: flex-start;
   }
 
+}
+
+
+/* =========================================================
+   COMPACT PHOTO MENU CARDS
+   Tighter sizing so the whole menu section fits on one
+   screen together with the fixed navbar
+   ========================================================= */
+
+.menu-section-title {
+  margin: 12px auto 8px !important;
+}
+
+.salad-card-photo .MuiCardContent-root {
+  padding: 14px 16px !important;
+}
+
+.salad-card-photo .MuiChip-root {
+  padding: 2px 6px !important;
+
+  font-size: 9.5px !important;
+}
+
+.salad-card-photo .salad-title {
+  font-size: clamp(22px, 2.4vw, 28px) !important;
+
+  letter-spacing: -1px;
+
+  margin-bottom: 6px !important;
+}
+
+.salad-card-photo .salad-description {
+  font-size: 12.5px !important;
+
+  line-height: 1.5 !important;
+
+  margin-bottom: 10px !important;
+}
+
+.salad-card-photo .nutrition-grid {
+  gap: 8px;
+}
+
+.salad-card-photo .nutrition-item {
+  min-height: 42px;
+
+  padding: 6px 9px;
+}
+
+.salad-card-photo .nutrition-value {
+  font-size: 14px !important;
+}
+
+.salad-card-photo .nutrition-label {
+  font-size: 9px !important;
+}
+
+.salad-card-photo .calories {
+  font-size: 13px !important;
+}
+
+.salad-card-photo .micronutrients {
+  font-size: 11px !important;
+
+  line-height: 1.45 !important;
+}
+
+.salad-card-photo .purchase-section {
+  margin-top: 10px;
+}
+
+.salad-card-photo .price {
+  font-size: 22px !important;
+}
+
+.salad-card-photo .buy-button {
+  margin-top: 6px !important;
+
+  padding: 7px 14px !important;
+
+  font-size: 11px !important;
+}
+
+
+/* =========================================================
+   LANDING PAGE CONTENT
+   Uses the existing Food, Actually color palette.
+   ========================================================= */
+
+.dashboard-nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.dashboard-nav .MuiButton-root {
+  color: #12284a;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: none;
+  border-radius: 20px;
+  padding: 7px 9px;
+}
+
+.dashboard-header-shell .MuiTypography-root,
+.dashboard-header-shell .MuiButton-root {
+  text-shadow: 0 1px 2px rgba(18, 40, 74, 0.32);
+}
+
+.dashboard-header-shell .subtitle {
+  font-size: 11px !important;
+}
+
+.dashboard-header > div:last-child .MuiButton-root {
+  padding: 7px 12px !important;
+  font-size: 11px !important;
+}
+
+.dashboard-nav .MuiButton-root:hover {
+  background: #f3d7dc;
+}
+
+.opening-sale-cta {
+  margin-top: 16px !important;
+  padding: 10px 18px !important;
+  border: 1.5px solid #12284a !important;
+  border-radius: 24px !important;
+  background: #12284a !important;
+  color: #fffaf3 !important;
+  font-weight: 700 !important;
+  text-transform: none !important;
+  box-shadow: 4px 4px 0 #e58d9c !important;
+}
+
+.opening-sale-cta:hover {
+  background: #fffaf3 !important;
+  color: #12284a !important;
+}
+
+.benefit-strip {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  max-width: 1280px;
+  margin: 0 auto 42px;
+  overflow: hidden;
+  border: 1.5px solid #12284a;
+  border-radius: 22px;
+  background: #fffaf3;
+  box-shadow: 5px 5px 0 #c9dced;
+}
+
+.benefit-item {
+  padding: 22px 26px;
+}
+
+.benefit-item + .benefit-item {
+  border-left: 1px solid #d9d2c8;
+}
+
+.benefit-title {
+  color: #12284a !important;
+  font-family: "Manrope", sans-serif !important;
+  font-size: 15px !important;
+  font-weight: 800 !important;
+}
+
+.benefit-copy {
+  margin-top: 5px !important;
+  color: #667181 !important;
+  font-size: 12px !important;
+  line-height: 1.5 !important;
+}
+
+.meal-plans,
+.how-it-works {
+  position: relative;
+  z-index: 1;
+  max-width: 1280px;
+  margin: 52px auto 0;
+  scroll-margin-top: 24px;
+}
+
+.meal-plans-heading,
+.how-heading {
+  max-width: 680px;
+  margin: 0 auto 24px;
+  text-align: center;
+}
+
+.section-kicker {
+  color: #a8495b !important;
+  font-size: 11px !important;
+  font-weight: 800 !important;
+  letter-spacing: 1.7px !important;
+}
+
+.meal-plans-title,
+.how-title {
+  margin-top: 5px !important;
+  color: #12284a !important;
+  font-family: "Manrope", sans-serif !important;
+  font-size: clamp(26px, 3vw, 38px) !important;
+  font-weight: 800 !important;
+  letter-spacing: -1.5px !important;
+}
+
+.meal-plans-description,
+.how-description {
+  margin-top: 8px !important;
+  color: #667181 !important;
+  font-size: 14px !important;
+  line-height: 1.7 !important;
+}
+
+.meal-plans-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.plan-card {
+  min-height: 270px;
+  overflow: hidden;
+  border: 1.5px solid #12284a !important;
+  border-radius: 24px !important;
+  background: #fffaf3 !important;
+  box-shadow: 5px 5px 0 #e7b5bc !important;
+}
+
+.plan-card .MuiCardContent-root {
+  display: flex;
+  height: 100%;
+  min-height: 270px;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 24px !important;
+}
+
+.plan-card-featured {
+  background: #dce9f3 !important;
+  box-shadow: 5px 5px 0 #12284a !important;
+}
+
+.plan-eyebrow {
+  color: #a8495b !important;
+  font-size: 10px !important;
+  font-weight: 800 !important;
+  letter-spacing: 1.2px !important;
+}
+
+.plan-title {
+  margin-top: 10px !important;
+  color: #12284a !important;
+  font-family: "Manrope", sans-serif !important;
+  font-size: 22px !important;
+  font-weight: 800 !important;
+}
+
+.plan-copy {
+  margin-top: 8px !important;
+  color: #596474 !important;
+  font-size: 13px !important;
+  line-height: 1.6 !important;
+}
+
+.plan-price {
+  margin-top: auto !important;
+  padding-top: 18px;
+  color: #12284a !important;
+  font-family: "Manrope", sans-serif !important;
+  font-size: 17px !important;
+  font-weight: 800 !important;
+}
+
+.plan-price span {
+  font-family: "DM Sans", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.plan-button {
+  margin-top: 13px !important;
+  padding: 8px 16px !important;
+  border-radius: 24px !important;
+  background: #12284a !important;
+  color: #fffaf3 !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  text-transform: none !important;
+}
+
+.plan-button:hover {
+  background: #e58d9c !important;
+  color: #12284a !important;
+}
+
+.subscription-plan-card {
+  min-height: 370px;
+}
+
+.subscription-plan-card .MuiCardContent-root {
+  min-height: 370px;
+  align-items: stretch;
+}
+
+.subscription-plan-card .plan-copy {
+  min-height: 58px;
+}
+
+.subscription-price-list {
+  margin-top: 10px;
+  border-top: 1px solid #d9d2c8;
+}
+
+.subscription-price-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  border-bottom: 1px solid #e4ded5;
+}
+
+.subscription-meal-label {
+  color: #596474 !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+}
+
+.subscription-meal-price {
+  color: #12284a !important;
+  font-family: "Manrope", sans-serif !important;
+  font-size: 12px !important;
+  font-weight: 800 !important;
+  white-space: nowrap;
+}
+
+.subscription-plan-card .plan-button {
+  align-self: flex-start;
+  margin-top: auto !important;
+}
+
+.subscription-pricing-note {
+  max-width: 850px;
+  margin: 14px auto 0 !important;
+  color: #667181 !important;
+  font-size: 12px !important;
+  line-height: 1.55 !important;
+  text-align: center;
+}
+
+.diet-plans {
+  position: relative;
+  z-index: 1;
+  max-width: 1280px;
+  margin: 64px auto 0;
+  scroll-margin-top: 24px;
+}
+
+.diet-plans-heading {
+  max-width: 720px;
+  margin: 0 auto 24px;
+  text-align: center;
+}
+
+.diet-plans-title {
+  margin-top: 5px !important;
+  color: #12284a !important;
+  font-family: "Manrope", sans-serif !important;
+  font-size: clamp(26px, 3vw, 38px) !important;
+  font-weight: 800 !important;
+}
+
+.diet-plans-description {
+  margin-top: 8px !important;
+  color: #667181 !important;
+  font-size: 14px !important;
+  line-height: 1.65 !important;
+}
+
+.diet-plan-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.diet-plan-card {
+  min-height: 270px;
+  border: 1.5px solid #12284a !important;
+  border-radius: 8px !important;
+  background: #fffaf3 !important;
+  box-shadow: 4px 4px 0 #c9dced !important;
+}
+
+.diet-plan-card:nth-child(even) {
+  background: #dce9f3 !important;
+}
+
+.diet-plan-card .MuiCardContent-root {
+  display: flex;
+  min-height: 270px;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 20px !important;
+}
+
+.diet-plan-focus {
+  color: #a8495b !important;
+  font-size: 10px !important;
+  font-weight: 800 !important;
+  letter-spacing: 1.1px !important;
+}
+
+.diet-plan-title {
+  margin-top: 9px !important;
+  color: #12284a !important;
+  font-family: "Manrope", sans-serif !important;
+  font-size: 19px !important;
+  font-weight: 800 !important;
+}
+
+.diet-plan-copy {
+  margin-top: 8px !important;
+  color: #596474 !important;
+  font-size: 12px !important;
+  line-height: 1.6 !important;
+}
+
+.diet-plan-link {
+  margin-top: auto !important;
+  padding: 8px 0 !important;
+  color: #12284a !important;
+  font-size: 11px !important;
+  font-weight: 800 !important;
+  text-align: left;
+  text-decoration: underline !important;
+  text-decoration-color: #e58d9c !important;
+  text-underline-offset: 4px;
+  text-transform: none !important;
+}
+
+.diet-plan-link:hover {
+  color: #a8495b !important;
+}
+
+.how-it-works {
+  left: 50%;
+  width: 100vw;
+  max-width: none;
+  height: 80vh;
+  height: 80svh;
+  min-height: 480px;
+  margin: 52px 0 0 -50vw;
+  padding: clamp(28px, 5vh, 48px) clamp(24px, 7vw, 112px) 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-top: 1px solid rgba(18, 40, 74, 0.22);
+  border-bottom: 1px solid rgba(18, 40, 74, 0.22);
+  background: #f8f4ec;
+  scroll-margin-top: 0;
+}
+
+.how-it-works .how-heading {
+  flex: 0 0 auto;
+  margin-bottom: 8px;
+}
+
+.steps-stage {
+  position: relative;
+  width: min(100%, 1120px);
+  height: clamp(300px, 46vh, 430px);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(190px, 1fr) minmax(260px, 1.05fr) minmax(190px, 1fr);
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas:
+    "explore plate daily"
+    "choose plate questionnaire";
+  align-items: center;
+  justify-items: center;
+  gap: 20px clamp(24px, 5vw, 80px);
+}
+
+.step-connectors {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.step-connectors-mobile {
+  display: none;
+}
+
+.step-connectors path {
+  fill: none;
+  stroke: #12284a;
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.step-position {
+  position: relative;
+  z-index: 2;
+  width: min(100%, 270px);
+}
+
+.step-card {
+  width: 100%;
+  min-height: 132px;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: 1.5px solid #12284a;
+  border-radius: 8px;
+  background: #fffaf3;
+  box-shadow: 3px 3px 0 #c9dced;
+}
+
+.step-explore {
+  grid-area: explore;
+  justify-self: start;
+  align-self: start;
+  transform: translateY(-18px);
+}
+
+.step-choose {
+  grid-area: choose;
+  justify-self: start;
+  transform: translateY(-18px);
+}
+
+.step-daily {
+  grid-area: daily;
+  justify-self: end;
+  align-self: start;
+  transform: translateY(18px);
+}
+
+.step-questionnaire {
+  grid-area: questionnaire;
+  justify-self: end;
+  align-self: end;
+  transform: translateY(18px);
+}
+
+.plate-illustration {
+  position: relative;
+  z-index: 2;
+  transform-origin: center;
+  grid-area: plate;
+  width: min(100%, 360px);
+  aspect-ratio: 1;
+  justify-self: center;
+  align-self: center;
+  overflow: hidden;
+  border: 5px double #12284a;
+  border-radius: 50%;
+  background: #fffaf3;
+  box-shadow: 0 0 0 10px rgba(201, 220, 237, 0.55);
+}
+
+.plate-illustration img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.step-number {
+  color: #a8495b !important;
+  font-family: "Manrope", sans-serif !important;
+  font-size: 11px !important;
+  font-weight: 800 !important;
+  letter-spacing: 1px !important;
+}
+
+.step-title {
+  margin-top: 4px !important;
+  color: #12284a !important;
+  font-family: "Manrope", sans-serif !important;
+  font-size: 16px !important;
+  font-weight: 800 !important;
+}
+
+.step-copy {
+  margin-top: 6px !important;
+  color: #596474 !important;
+  font-size: 11px !important;
+  line-height: 1.45 !important;
+}
+
+@media (max-width: 900px) {
+  .dashboard-nav .MuiButton-root {
+    padding-inline: 8px;
+  }
+
+  .meal-plans-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .diet-plan-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .plan-card:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .steps-stage {
+    grid-template-columns: minmax(150px, 1fr) minmax(220px, 1.1fr) minmax(150px, 1fr);
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas:
+      "explore plate daily"
+      "choose plate questionnaire";
+    gap: 16px 18px;
+  }
+
+  .step-position {
+    width: min(100%, 270px);
+  }
+
+  .step-card {
+    padding: 10px 14px;
+  }
+
+  .step-title {
+    font-size: 14px !important;
+  }
+}
+
+@media (max-width: 750px) {
+  .dashboard-nav {
+    width: 100%;
+    flex-wrap: wrap;
+    margin-top: -10px;
+  }
+
+  .dashboard-nav .MuiButton-root {
+    padding-inline: 8px;
+    font-size: 10px;
+  }
+
+  .benefit-strip {
+    grid-template-columns: 1fr;
+    margin-bottom: 32px;
+  }
+
+  .benefit-item {
+    padding: 17px 20px;
+  }
+
+  .benefit-item + .benefit-item {
+    border-top: 1px solid #d9d2c8;
+    border-left: 0;
+  }
+
+  .meal-plans {
+    margin-top: 38px;
+  }
+
+  .meal-plans-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .diet-plan-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .plan-card:last-child {
+    grid-column: auto;
+  }
+
+  .how-it-works {
+    width: 100vw;
+    height: auto;
+    min-height: 80vh;
+    min-height: 80svh;
+    margin-top: 38px;
+    padding: 44px 20px 32px;
+    justify-content: flex-start;
+  }
+
+  .steps-stage {
+    container-type: inline-size;
+    height: auto;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: minmax(112px, auto) auto minmax(112px, auto);
+    grid-template-areas:
+      "explore choose"
+      "plate plate"
+      "questionnaire daily";
+    gap: 30px 10px;
+  }
+
+  .step-connectors {
+    display: none;
+  }
+
+  .step-connectors-mobile {
+    display: block;
+  }
+
+  .plate-illustration {
+    width: min(60cqw, 220px);
+    margin: 0 auto;
+  }
+
+  .step-card {
+    height: auto;
+    min-height: 112px;
+    padding: 10px;
+  }
+
+  .step-position {
+    width: 100%;
+    transform: none;
+  }
+
+  .step-title {
+    font-size: 13px !important;
+  }
+}
+
+@media (max-width: 380px) {
+  .plate-illustration {
+    width: min(60cqw, 180px);
+  }
+
+  .step-card {
+    padding: 8px;
+  }
+
+  .step-title {
+    font-size: 12px !important;
+  }
+
+  .step-copy {
+    font-size: 10px !important;
+  }
 }
