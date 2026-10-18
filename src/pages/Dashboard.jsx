@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { motion, AnimatePresence, useScroll, useSpring, useTransform } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useSpring, useTransform, useMotionValueEvent } from "framer-motion";
 
 import {
   Box,
@@ -65,6 +65,20 @@ const Dashboard = () => {
   const bowlOpacity = useTransform(howItWorksProgress, [0, 0.65, 1], [0, 0.82, 1]);
   const bowlScale = useTransform(howItWorksProgress, [0, 1], [0.76, 1]);
   const bowlRotation = useTransform(howItWorksProgress, [0, 1], [-9, 0]);
+
+  // Freeze the bowl once it has fully landed so scrolling back up and
+  // down doesn't re-trigger the drop animation (keeping behaviour consistent).
+  const bowlHasLanded = useRef(false);
+  useMotionValueEvent(howItWorksProgress, "change", (latest) => {
+    if (!bowlHasLanded.current && latest >= 0.95) {
+      bowlHasLanded.current = true;
+      // Snap motion values to their final resting state and stop updating them.
+      bowlDrop.jump("0vh");
+      bowlOpacity.jump(1);
+      bowlScale.jump(1);
+      bowlRotation.jump(0);
+    }
+  });
 
   useEffect(() => {
     const interval = setInterval(() => {
