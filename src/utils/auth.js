@@ -1,88 +1,95 @@
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
-import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
-import { auth, db } from '../firebase';
+// ── JWT Auth Utilities ────────────────────────────────────────────────────────
+// All auth now goes through the FastAPI backend. No Firebase dependency.
 
-export const setCurrentUser = (user) => {
-  const currentUser = {
-    uid: user.uid,
-    name: user.name || user.phoneNumber || 'User',
-    phoneNumber: user.phoneNumber,
-  };
+const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
-  localStorage.setItem('currentUser', JSON.stringify(currentUser));
-  localStorage.setItem('userName', currentUser.name);
+// ── Token storage ─────────────────────────────────────────────────────────────
 
-  return currentUser;
+export const saveSession = (token, user) => {
+  localStorage.setItem("access_token", token);
+  localStorage.setItem("currentUser", JSON.stringify(user));
+  localStorage.setItem("userName", user.name);
+  localStorage.setItem("points", String(user.points ?? 0));
+  localStorage.setItem("saladsPurchased", String(user.salads_purchased ?? 0));
 };
+
+export const clearSession = () => {
+  localStorage.removeItem("access_token");
+  localStorage.removeItem("currentUser");
+  localStorage.removeItem("userName");
+};
+
+export const getToken = () => localStorage.getItem("access_token");
 
 export const getCurrentUser = () => {
   try {
-    return JSON.parse(localStorage.getItem('currentUser'));
-  } catch (error) {
+    const raw = localStorage.getItem("currentUser");
+    return raw ? JSON.parse(raw) : null;
+  } catch {
     return null;
   }
 };
 
-export const logout = async () => {
-  try {
-    await signOut(auth);
-  } catch (error) {
-    console.warn('Sign-out error:', error);
-  }
+// ── API helpers ───────────────────────────────────────────────────────────────
 
-  localStorage.removeItem('currentUser');
-  localStorage.removeItem('userName');
-};
-
-export const loginWithEmail = async (email, password) => {
-  if (!email || !password) {
-    throw new Error('Email and password are required.');
-  }
-
-  const result = await signInWithEmailAndPassword(auth, email, password);
-  const user = result.user;
-  const currentUser = setCurrentUser({
-    uid: user.uid,
-    name: user.displayName || 'User',
-    email: user.email,
+const post = async (path, body) => {
+  const res = await fetch(`${API_BASE}${path}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
   });
 
-  return currentUser;
+  const data = await res.json();
+
+  if (!res.ok) {
+    throw new Error(data.detail || "Something went wrong.");
+  }
+
+  return data;
+};
+
+// ── Auth actions ──────────────────────────────────────────────────────────────
+
+export const loginWithEmail = async (email, password) => {
+  const data = await post("/auth/login", { email, password });
+  saveSession(data.access_token, data.user);
+  return data.user;
 };
 
 export const registerWithEmail = async ({ name, email, password }) => {
-  const trimmedName = (name || '').trim();
+  if (!name?.trim()) throw new Error("Please enter your name.");
+  if (!email) throw new Error("Please enter your email.");
+  if (password.length < 6) throw new Error("Password must be at least 6 characters.");
 
-  if (!trimmedName) {
-    throw new Error('Please enter your name.');
-  }
+  const data = await post("/auth/register", { name: name.trim(), email, password });
+  saveSession(data.access_token, data.user);
+  return data.user;
+};
 
-  if (!email) {
-    throw new Error('Please enter your email.');
-  }
+export const logout = () => {
+  clearSession();
+};
 
-  if (password.length < 6) {
-    throw new Error('Password must be at least 6 characters.');
-  }
+// ── Authenticated fetch ───────────────────────────────────────────────────────
+// Use this for any protected API calls from components.
 
-  const result = await createUserWithEmailAndPassword(auth, email, password);
-  const user = result.user;
-  const currentUser = setCurrentUser({
-    uid: user.uid,
-    name: trimmedName,
-    email: user.email,
+export const authFetch = async (path, options = {}) => {
+  const token = getToken();
+
+  const res = await fetch(`${API_BASE}${path}`, {
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      ...(options.headers || {}),
+    },
   });
 
-  await setDoc(
-    doc(db, 'users', user.uid),
-    {
-      uid: user.uid,
-      name: trimmedName,
-      email: user.email,
-      createdAt: serverTimestamp(),
-    },
-    { merge: true }
-  );
+  const data = await res.json();
 
-  return currentUser;
+  if (!res.ok) {
+    throw new Error(data.detail || "Request failed.");
+  }
+
+  return data;
 };

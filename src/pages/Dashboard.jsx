@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { toast } from "react-toastify";
 import { motion, AnimatePresence, useScroll, useSpring, useTransform, useMotionValueEvent } from "framer-motion";
 
 import {
@@ -22,10 +24,11 @@ import {
   Whatshot,
   ChevronLeft,
   ChevronRight,
-  ExpandMore,
+  ExpandMore as MuiExpandMore,
 } from "@mui/icons-material";
 
 import { getCurrentUser } from "../utils/auth";
+import { menuApi } from "../utils/api";
 import DietitianProfile from "../assets/dietatian_profile_closeup.jpeg";
 import WahidProfile from "../assets/Wahid_profile.jpeg";
 import PaneerSaladImage from "../assets/menu/paneer-salad.png";
@@ -135,155 +138,39 @@ const Dashboard = () => {
   // MENU DATA
   // =========================================================
 
-  const menuItems = [
-    {
-      name: "Paneer Salad",
+  const { data: menuItems = [], isLoading: menuLoading, error: menuError } = useQuery({
+    queryKey: ["menuItems"],
+    queryFn: menuApi.getMenuItems,
+  });
 
-      image: PaneerSaladImage,
+  const { data: weeklyMenuItems = [], isLoading: weeklyLoading, error: weeklyError } = useQuery({
+    queryKey: ["weeklyMenuItems"],
+    queryFn: menuApi.getWeeklyMenuItems,
+  });
 
-      badge:
-        "NOW INTRODUCING • VEGETARIAN SALAD",
+  const formattedMenuItems = menuItems.map((item) => ({
+    id: item.id,
+    name: item.name,
+    titleName: item.title_name || item.name,
+    image: item.image_url,
+    badge: item.badge,
+    price: item.price,
+    originalPrice: item.original_price,
+    calories: item.calories,
+    protein: item.protein,
+    carbs: item.carbs,
+    fat: item.fat,
+    fiber: item.fiber,
+    description: item.description,
+    micronutrients: item.micronutrients,
+  }));
 
-      price: 269,
-
-      originalPrice: 269,
-
-      calories: 410,
-
-      protein: "30g",
-
-      carbs: "55g",
-
-      fat: "8g",
-
-      fiber: "6g",
-
-      description:
-        "Fresh vegetables, grilled paneer and a light dressing — a balanced vegetarian meal made for your everyday nutrition goals.",
-
-      micronutrients:
-        "Rich in protein, vitamin A, vitamin C, iron and potassium.",
-    },
-
-    {
-      name: "Grilled Chicken Salad",
-
-      image: GrilledChickenSaladImage,
-
-      badge:
-        "HIGH PROTEIN • CUSTOMER FAVORITE",
-
-      price: 299,
-
-      originalPrice: 329,
-
-      calories: 360,
-
-      protein: "34g",
-
-      carbs: "22g",
-
-      fat: "11g",
-
-      fiber: "7g",
-
-      description:
-        "Fresh vegetables, grilled chicken and a light dressing — a high-protein meal designed for your everyday nutrition goals.",
-
-      micronutrients:
-        "Rich in protein, vitamin B6, vitamin C, iron and potassium.",
-    },
-
-    {
-      name: "Millet Protein Bowl",
-
-      image: MilletBowlImage,
-
-      badge:
-        "WHOLEGRAIN • HIGH FIBER",
-
-      price: 249,
-
-      originalPrice: 279,
-
-      calories: 390,
-
-      protein: "24g",
-
-      carbs: "48g",
-
-      fat: "10g",
-
-      fiber: "9g",
-
-      description:
-        "Wholesome millet, fresh vegetables and protein-packed ingredients combined into a satisfying balanced meal.",
-
-      micronutrients:
-        "Rich in magnesium, iron, vitamin B6 and potassium.",
-    },
-
-    {
-      name: "Egg Protein Bowl",
-
-      image: EggBowlImage,
-
-      badge:
-        "HIGH PROTEIN • BALANCED MEAL",
-
-      price: 229,
-
-      originalPrice: 259,
-
-      calories: 350,
-
-      protein: "27g",
-
-      carbs: "28g",
-
-      fat: "12g",
-
-      fiber: "6g",
-
-      description:
-        "Fresh vegetables, boiled eggs and wholesome grains combined for a delicious protein-rich everyday meal.",
-
-      micronutrients:
-        "Rich in vitamin B12, vitamin D, selenium, iron and potassium.",
-    },
-
-    {
-      name: "Chickpea Power Bowl",
-
-      image: ChickpeaBowlImage,
-
-      badge:
-        "PLANT PROTEIN • HIGH FIBER",
-
-      price: 219,
-
-      originalPrice: 249,
-
-      calories: 380,
-
-      protein: "21g",
-
-      carbs: "52g",
-
-      fat: "9g",
-
-      fiber: "11g",
-
-      description:
-        "Protein-rich chickpeas, fresh vegetables and wholesome grains for a filling plant-based meal.",
-
-      micronutrients:
-        "Rich in folate, iron, magnesium, potassium and vitamin C.",
-    },
-  ];
-
-  const mealPriceMinimum = Math.min(...menuItems.map((item) => item.price));
-  const mealPriceMaximum = Math.max(...menuItems.map((item) => item.price));
+  const mealPriceMinimum = formattedMenuItems.length > 0
+    ? Math.min(...formattedMenuItems.map((item) => item.price))
+    : 0;
+  const mealPriceMaximum = formattedMenuItems.length > 0
+    ? Math.max(...formattedMenuItems.map((item) => item.price))
+    : 0;
   const formatPrice = (amount) =>
     new Intl.NumberFormat("en-IN", {
       style: "currency",
@@ -424,8 +311,14 @@ const Dashboard = () => {
   // SELECTED MENU ITEM
   // =========================================================
 
-  const [selectedSalad, setSelectedSalad] =
-    useState(menuItems[0]);
+  const [selectedSalad, setSelectedSalad] = useState(null);
+
+  // Update selectedSalad when menu items load
+  useEffect(() => {
+    if (formattedMenuItems.length > 0 && !selectedSalad) {
+      setSelectedSalad(formattedMenuItems[0]);
+    }
+  }, [formattedMenuItems, selectedSalad]);
 
 
   // =========================================================
@@ -471,9 +364,7 @@ const Dashboard = () => {
     setPaymentModalOpen(false);
 
 
-    alert(
-      "🎉 Payment successful!\n\n+10 reward points added."
-    );
+    toast.success("🎉 Payment successful! +10 reward points added.");
 
 
     window.location.reload();
@@ -1024,6 +915,140 @@ const Dashboard = () => {
 
 
       {/* =====================================================
+          THIS WEEK MENU
+      ===================================================== */}
+
+      <motion.div
+        initial={{
+          opacity: 0,
+          y: 25,
+        }}
+
+        animate={{
+          opacity: 1,
+          y: 0,
+        }}
+
+        transition={{
+          duration: 0.7,
+        }}
+      >
+        <Typography
+          className="section-title menu-section-title"
+          sx={{
+            marginBottom: "8px",
+          }}
+        >
+          This Week Menu
+        </Typography>
+
+        <Typography
+          sx={{
+            color: "#667181",
+            fontSize: "14px",
+            marginBottom: "10px",
+          }}
+        >
+          Plan your week with our specially curated meals for Monday to Friday
+        </Typography>
+
+        {weeklyLoading ? (
+          <Typography sx={{ textAlign: "center", padding: "40px", color: "#667181" }}>
+            Loading weekly menu...
+          </Typography>
+        ) : weeklyError ? (
+          <Typography sx={{ textAlign: "center", padding: "40px", color: "#e74c3c" }}>
+            Error loading weekly menu. Please try again later.
+          </Typography>
+        ) : weeklyMenuItems.length === 0 ? (
+          <Typography sx={{ textAlign: "center", padding: "40px", color: "#667181" }}>
+            No weekly menu available.
+          </Typography>
+        ) : (
+          <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+            {["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"].map((day) => {
+              const dayItems = weeklyMenuItems.filter(item => item.day_of_week === day);
+              if (dayItems.length === 0) return null;
+
+              return (
+                <Accordion key={day} sx={{ boxShadow: 2 }}>
+                  <AccordionSummary expandIcon={<MuiExpandMore />}>
+                    <Typography variant="h6">{day}</Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap" }}>
+                      {dayItems.map((item) => (
+                        <Card
+                          key={item.id}
+                          sx={{
+                            width: 280,
+                            cursor: "pointer",
+                            transition: "transform 0.2s",
+                            "&:hover": {
+                              transform: "translateY(-4px)",
+                            },
+                          }}
+                          onClick={() => navigate(`/weekly-menu-item/${item.id}`)}
+                        >
+                          <Box
+                            component="img"
+                            src={item.image_url}
+                            alt={item.title_name || item.name}
+                            sx={{
+                              width: "100%",
+                              height: 160,
+                              objectFit: "cover",
+                            }}
+                          />
+                          <CardContent>
+                            <Typography variant="h6" gutterBottom>
+                              {item.title_name || item.name}
+                            </Typography>
+                            <Box sx={{ display: "flex", gap: 1, mb: 1 }}>
+                              <Chip
+                                label={item.meal_type.toUpperCase()}
+                                size="small"
+                                sx={{
+                                  backgroundColor: "#e58d9c",
+                                  color: "white",
+                                }}
+                              />
+                            </Box>
+                            <Box sx={{ display: "flex", gap: 2, mt: 1 }}>
+                              <Typography variant="body2" color="text.secondary">
+                                Protein: {item.protein}
+                              </Typography>
+                              <Typography variant="body2" color="text.secondary">
+                                Fiber: {item.fiber}
+                              </Typography>
+                            </Box>
+                            <Button
+                              variant="contained"
+                              fullWidth
+                              sx={{
+                                mt: 2,
+                                backgroundColor: "#12284a",
+                                "&:hover": {
+                                  backgroundColor: "#1a3a5e",
+                                },
+                              }}
+                            >
+                              Opt This Menu
+                            </Button>
+                          </CardContent>
+                        </Card>
+                      ))}
+                    </Box>
+                  </AccordionDetails>
+                </Accordion>
+              );
+            })}
+          </Box>
+        )}
+      </motion.div>
+
+
+      {/* =====================================================
           OUR MENU
       ===================================================== */}
 
@@ -1069,6 +1094,19 @@ const Dashboard = () => {
             HORIZONTAL MENU
         ================================================= */}
 
+        {menuLoading ? (
+          <Typography sx={{ textAlign: "center", padding: "40px", color: "#667181" }}>
+            Loading menu items...
+          </Typography>
+        ) : menuError ? (
+          <Typography sx={{ textAlign: "center", padding: "40px", color: "#e74c3c" }}>
+            Error loading menu items. Please try again later.
+          </Typography>
+        ) : formattedMenuItems.length === 0 ? (
+          <Typography sx={{ textAlign: "center", padding: "40px", color: "#667181" }}>
+            No menu items available.
+          </Typography>
+        ) : (
         <Box
           className="menu-scroll"
 
@@ -1101,12 +1139,12 @@ const Dashboard = () => {
           }}
         >
 
-          {menuItems.map(
+          {formattedMenuItems.map(
             (item, index) => (
 
               <motion.div
 
-                key={item.name}
+                key={item.id}
 
                 whileHover={{
                   y: -8,
@@ -1132,14 +1170,14 @@ const Dashboard = () => {
                     position: "relative",
 
                     border:
-                      selectedSalad.name ===
-                      item.name
+                      selectedSalad?.id ===
+                      item.id
                         ? "2px solid #12284a"
                         : undefined,
                   }}
 
                   onClick={() => {
-                    setSelectedSalad(item);
+                    navigate(`/menu-item/${item.id}`);
                   }}
                 >
 
@@ -1148,7 +1186,7 @@ const Dashboard = () => {
                   <Box
                     component="img"
                     src={item.image}
-                    alt={item.name}
+                    alt={item.titleName}
                     loading="lazy"
                     decoding="async"
 
@@ -1181,7 +1219,7 @@ const Dashboard = () => {
                     {/* ── TOP: badge + name + macros ── */}
                     <Box className="salad-zone salad-zone-top">
                       <Chip label={item.badge} size="small" />
-                      <Typography className="salad-title">{item.name}</Typography>
+                      <Typography className="salad-title">{item.titleName}</Typography>
                       <Box className="salad-macro-row">
                         <Box className="salad-macro-pill">
                           <Typography className="salad-macro-value">{item.protein}</Typography>
@@ -1204,8 +1242,7 @@ const Dashboard = () => {
                           startIcon={<ShoppingCart />}
                           onClick={(event) => {
                             event.stopPropagation();
-                            setSelectedSalad(item);
-                            handlePurchase();
+                            navigate(`/menu-item/${item.id}`);
                           }}
                           className="buy-button"
                         >
@@ -1222,8 +1259,10 @@ const Dashboard = () => {
 
             )
           )}
-
         </Box>
+        )}
+
+
 
 
         {/* SCROLL HINT */}
@@ -1781,7 +1820,7 @@ const Dashboard = () => {
             <Accordion key={faq.question} className="faq-item" disableGutters>
 
               <AccordionSummary
-                expandIcon={<ExpandMore />}
+                expandIcon={<MuiExpandMore />}
                 className="faq-item-summary"
               >
 
@@ -2111,7 +2150,7 @@ const Dashboard = () => {
         }
 
         amount={
-          selectedSalad.price
+          selectedSalad?.price || 0
         }
 
         userName={

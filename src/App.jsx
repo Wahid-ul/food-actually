@@ -5,6 +5,10 @@ import Dashboard from './pages/Dashboard';
 import Questionnaire from './pages/Questionnaire';
 import Plans from './pages/Plans';
 import Blog from './pages/Blog';
+import AdminUpload from './pages/AdminUpload';
+import AdminWeeklyMenuUpload from './pages/AdminWeeklyMenuUpload';
+import MenuItemDetail from './pages/MenuItemDetail';
+import WeeklyMenuItemDetail from './pages/WeeklyMenuItemDetail';
 
 export default function App() {
   return (
@@ -16,6 +20,10 @@ export default function App() {
       <Route path="/questionnaire" element={<Questionnaire />} />
       <Route path="/plans" element={<Plans />} />
       <Route path="/blog" element={<Blog />} />
+      <Route path="/admin-upload" element={<AdminUpload />} />
+      <Route path="/admin-weekly-menu-upload" element={<AdminWeeklyMenuUpload />} />
+      <Route path="/menu-item/:id" element={<MenuItemDetail />} />
+      <Route path="/weekly-menu-item/:id" element={<WeeklyMenuItemDetail />} />
     </Routes>
   );
 }
